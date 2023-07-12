@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="helloworld.js"></script>
     <script>
-        if('serviceworker' in navigator) {
+        if('serviceWorker' in navigator) {
             navigator.serviceWorker.register('sw.js').then(function(registration){
                 console.log('ServiceWorker registration successful with scope: ', registration.scope);
             }).catch(function(err) {
@@ -21,6 +21,6 @@
 <body>
     <h1>HelloWorld!!</h1>
     <h2 id="test">test</h2>
-    ver.0.1
+    ver.0.2
 </body>
 </html>
