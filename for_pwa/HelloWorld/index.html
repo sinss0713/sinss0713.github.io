@@ -5,11 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="defult.src * 'self' 'unsafe-inline'">
     <title>HelloWorld!!</title>
+    <script src="./helloworld.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded',()=>{
-            const test=document.getElementById('test');
-            test.innerText="testOK!";
-        });
+        if('serviceworker' in navigator) {
+            navigator.serviceWorker.register('helloworld.js').then(function(registration){
+                console.log('ServiceWorker registration successful with scope: ', registration.scope);
+            }).catch(function(err) {
+                console.log('ServiceWorker registration failed: ', err);
+            });
+        }
     </script>
 </head>
 <body>
