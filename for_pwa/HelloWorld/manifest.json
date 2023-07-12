@@ -1,20 +1,11 @@
 {
-"manifest_version": 2,
 "name": "HelloWorldアプリ",
 "description": "HelloWorld chromeApp",
-"version": "1.1",
 "icons": {
-"128": "128.png"
+"src": "128.png",
+"sizes": "128x128",
+"type": "image/png"
 },
-"start_url": ".",
-"display": "standalone",
-"app": {
-"launch": {
-"local_path": "./index.html"
-},
-"permissions": [
-"unlimitedStorage",
-"notifications"
-]
-}
+"start_url": "index.html",
+"display": "standalone"
 }
