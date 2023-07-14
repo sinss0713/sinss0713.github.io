@@ -4,9 +4,9 @@
 // キャッシュ名とキャッシュファイルの指定
 var CACHE_NAME = 'pwa-sample-caches';
 var urlsToCache = [
-    '/for_pwa/',
+    '/for_pwa/HelloWorld/',
     // '/for_pwa/css/style.css',
-    '/for_pwa/helloworld.js'
+    '/for_pwa/HelloWorld/helloworld.js'
 ];
 
 // インストール処理
