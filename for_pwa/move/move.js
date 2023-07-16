@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     var clientWidth;
     var directionRight = true;
     const ball=document.getElementById('ball');
-    document.addEventListener('click',()=>{ballx = move_ball(ballx,bally)})
+    // document.addEventListener('click',()=>{ballx = move_ball(ballx,bally)})
 
     function move_ball() {
         clientWidth=document.documentElement.clientWidth;
