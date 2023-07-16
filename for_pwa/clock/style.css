@@ -2,7 +2,7 @@ h1{
     color:blue;
 }
 body{
-    width: 460px;
+    width: min(100%,460px);
     border: 2px solid black;
     border-radius: 10px;
     padding: 10px;
