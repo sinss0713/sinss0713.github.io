@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded',()=>{
+    // clock.jsの内容はQiitaから拝借
     const clock_time=document.getElementById('clock_time');
     const clock_date=document.getElementById('clock_date');
     var weeks = new Array("Sun","Mon","Tue","Wed","Thu","Fri","Sat");
