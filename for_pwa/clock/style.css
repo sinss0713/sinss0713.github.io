@@ -1,8 +1,9 @@
 h1{
-    color:orange;
+    color:green;
 }
-body{
-    width: min(100%,460px);
+#clock_container{
+    margin: auto;
+    width: min(90%,460px);
     border: 2px solid black;
     border-radius: 10px;
     padding: 10px;
