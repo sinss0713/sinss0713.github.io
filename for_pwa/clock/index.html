@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja-jp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="manifest" href="manifest.json">
+    <!-- <meta http-equiv="Content-Security-Policy" content="default.src * 'self' 'unsafe-inline'"> -->
+    <title>Clock!!</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="clock.js"></script>
+    <script>
+        if('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js').then(function(registration){
+                console.log('ServiceWorker registration successful with scope: ', registration.scope);
+            }).catch(function(err) {
+                console.log('ServiceWorker registration failed: ', err);
+            });
+        }
+    </script>
+</head>
+<body>
+    <h1>Clock!!</h1>
+    <div id="clock_body">
+        <div id="clock_time">時刻</div>
+        <div id="clock_date">日付</div>
+    </div>
+    PWAの時計<br>
+    ver.0.1
+</body>
+</html>
