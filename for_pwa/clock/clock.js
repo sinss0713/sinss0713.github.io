@@ -23,5 +23,6 @@ document.addEventListener('DOMContentLoaded',()=>{
     clock_time.textContent = hour+":"+minute+":"+second;
     clock_date.textContent = year+"/"+month+"/"+day+"("+week+")";
     }
+    // setInterval(関数,ミリ秒); → 関数を引数にとる。
     setInterval(clock,1000);
 });
