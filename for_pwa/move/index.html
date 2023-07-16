@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja-jp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="manifest" href="manifest.json">
+    <!-- <meta http-equiv="Content-Security-Policy" content="default.src * 'self' 'unsafe-inline'"> -->
+    <title>Move!!</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="move.js"></script>
+    <script>
+        if('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js').then(function(registration){
+                console.log('ServiceWorker registration successful with scope: ', registration.scope);
+            }).catch(function(err) {
+                console.log('ServiceWorker registration failed: ', err);
+            });
+        }
+    </script>
+</head>
+<body>
+    <div id="move_container">
+    <h1>Move!!</h1>
+    <div id="move_body">
+        <span id="ball" style="top:100px; left:100px;">●</span>
+    </div>
+    PWAでsetintervalのテスト<br>
+    ver.0.1
+    </div>
+</body>
+</html>
