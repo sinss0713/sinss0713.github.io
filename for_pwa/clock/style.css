@@ -2,13 +2,15 @@ h1{
     color:blue;
 }
 body{
+    width: 460px;
     border: 2px solid black;
     border-radius: 10px;
     padding: 10px;
 }
 
 #clock_body{
-    width: 50%;
+    width: 80%;
+    margin:auto;
     color: yellowgreen;
     background-color: black;
     font-size: 36px;

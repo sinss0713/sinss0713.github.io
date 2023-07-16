@@ -1,6 +1,6 @@
 {
-"name": "HelloWorldアプリ",
-"description": "HelloWorld chromeApp",
+"name": "Clockアプリ",
+"description": "Clock chromeApp",
 "icons": [{
 "src": "192.png",
 "sizes": "192x192",
