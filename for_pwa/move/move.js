@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     const ball = document.getElementById('ball');
     let src = 'ball0.png';
     let imgWidth;
+
     const getImg = function(src){
         return new Promise(function(resolve,reject){
             const img = new Image();
@@ -20,6 +21,7 @@ document.addEventListener('DOMContentLoaded',()=>{
             }
         });
     }
+
     getImg(src)
     .then(function(res){
         imgWidth = res.width;
@@ -28,6 +30,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     .catch(function(error){
         console.log(error);
     });
+    
     // ballImg.width;
     // let imgWidth = ballImg.width;
     // let imgWidth = ball.clientWidth;
