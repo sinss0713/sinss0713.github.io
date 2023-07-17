@@ -1,16 +1,19 @@
 document.addEventListener('DOMContentLoaded',()=>{
     // var count=0;
     var ballx = 10;
-    var bally = 150;
-    var clientWidth;
+    var bally = 160;
+    let clientWidth = document.documentElement.clientWidth; //ブラウザの幅
     // let imgWidth;
     let directionRight = true;
     const ball = document.getElementById('ball');
+    const jsver = document.getElementById('jsver');
+    jsver.textContent = 'script ver.0.4';
     let imgWidth = ball.clientWidth;
+    imgWidth = 98;
     let imgDirection = true;
     let imgNum = 0;
     let imgStr = 'ball0.png';
-    console.log('imgWidth(2)='+imgWidth);
+    // console.log('imgWidth(2)='+imgWidth);
     // document.addEventListener('click',()=>{ballx = move_ball(ballx,bally)})
 
     function move_ball() {
