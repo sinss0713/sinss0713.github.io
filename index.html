@@ -5,9 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hello World!</title>
     <link rel="stylesheet" href="css/pages01.css">
+    <script>
+        document.addEventListener('DOMContentLoaded',()=>{
+            const status=document.getElementById('status');
+            let width;
+            let height;
+            let strStatus='Status: ';
+            let updateStatus = function(str){
+                // console.log('strStatus:'+strStatus);
+                width = window.innerWidth;
+                height = window.innerHeight;
+                status.textContent=str + 'Width=' + width + 'px, Height=' + height + 'px';
+            };
+
+            updateStatus(strStatus);
+
+            window.addEventListener('resize',()=>{
+                updateStatus(strStatus);
+            });
+        });
+    </script>
 </head>
 <body>
-<h1>Hello World!</h1>
-こんにちは
+    <header>
+        <div id="status">Status:</div>
+    </header>
+    <main>
+        <h1>Hello World!</h1>
+        <p>
+            こんにちは。<br>
+            テストページです。
+        </p>
+    </main>
 </body>
-</html>
+    </html>
