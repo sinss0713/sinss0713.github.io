@@ -1,13 +1,14 @@
 document.addEventListener('DOMContentLoaded',()=>{
     // var count=0;
     var ballx = 10;
-    var bally = 160;
+    var bally = 180;
     let clientWidth = document.documentElement.clientWidth; //ブラウザの幅
     let directionRight = true;
     const ball = document.getElementById('ball');
     let imgWidth = ball.clientWidth;
     const jsver = document.getElementById('jsver');
-    jsver.textContent = 'script ver.0.5c';
+    const status = document.getElementById('status');
+    jsver.textContent = 'script ver.0.5d';
     // imgWidth = 98;
     let imgDirection = true;
     let imgNum = 0;
@@ -40,6 +41,7 @@ document.addEventListener('DOMContentLoaded',()=>{
         ball.setAttribute('style',posStr);
         ball.setAttribute('src',imgStr);
         // console.log("ballx=" + ballx);
+        status.textContent = 'imgWidth=' + imgWidth +'px, x=' + ballx + ', y=' + bally
         return;
     };
 
