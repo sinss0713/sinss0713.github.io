@@ -1,19 +1,43 @@
 document.addEventListener('DOMContentLoaded',()=>{
+    const verStr = 'script ver.0.5f';
     // var count=0;
-    var ballx = 10;
-    var bally = 180;
+    let ballx = 10;
+    let bally = 180;
     let clientWidth = document.documentElement.clientWidth; //ブラウザの幅
     let directionRight = true;
     const ball = document.getElementById('ball');
-    let imgWidth = ball.clientWidth;
+    let src = 'ball0.png';
+    let imgWidth;
+    const getImg = function(src){
+        return new Promise(function(resolve,reject){
+            const img = new Image();
+            img.src = src;
+            img.onload = function(){
+                resolve(img);
+            }
+            img.onerror = function(error){
+                reject(error);
+            }
+        });
+    }
+    getImg(src)
+    .then(function(res){
+        imgWidth = res.width;
+        console.log('imgWidth(2)='+imgWidth);
+    })
+    .catch(function(error){
+        console.log(error);
+    });
+    // ballImg.width;
+    // let imgWidth = ballImg.width;
+    // let imgWidth = ball.clientWidth;
     const jsver = document.getElementById('jsver');
     const status = document.getElementById('status');
-    jsver.textContent = 'script ver.0.5d';
+    jsver.textContent = verStr;
     // imgWidth = 98;
     let imgDirection = true;
     let imgNum = 0;
     let imgStr = 'ball0.png';
-    console.log('imgWidth(2)='+imgWidth);
     // document.addEventListener('click',()=>{ballx = move_ball(ballx,bally)})
 
     function move_ball() {
