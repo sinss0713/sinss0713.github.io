@@ -21,6 +21,14 @@ main{
     width:95%;
     height:85vh;
     background-color: #eee;
+    background-color: #eef;
     box-shadow: 2px 2px 12px darkgray;
     border-radius: 10px;
+}
+
+.main_img{
+    display: block;
+    width: min(100%,1200px);
+    margin:0 auto;
+    height: auto;
 }

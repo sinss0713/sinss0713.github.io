@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja-jp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON test</title>
+    <script>
+        const to_json = [
+
+{ Name : "JsonData1", Desc : "JavaScript Object Notation1", UseInt :1 , UseString : "String1", UseArray : [11,12,13,14,15]},
+
+{ Name : "JsonData2", Desc : "JavaScript Object Notation2", UseInt :2 , UseString : "String2", UseArray : [21,22,23,24,25]},
+
+{ Name : "JsonData3", Desc : "JavaScript Object Notation3", UseInt :3 , UseString : "String3", UseArray : [31,32,33,34,35]}
+
+]
+
+console.log(to_json); // 確認用
+
+console.log(to_json[0].Name); // 「JsonData1」が表示される
+
+
+
+// JSONに変換
+
+const json_string = JSON.stringify(to_json);
+
+console.log("JSONstring=")
+console.log(json_string); // 確認用
+
+console.log(json_string[0].Name); // 参照できない
+
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
