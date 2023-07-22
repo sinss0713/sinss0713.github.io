@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja-jp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .inputArea > *{
+            display:block;
+        }
+        .resultArea{
+
+        }
+        .button{
+            width: 100px;;
+            border: 1px solid black;
+            border-radius: 10px;
+            padding:2px 10px;
+            box-shadow: 1px 1px 2px black;
+            
+        }
+        .button:active{
+            box-shadow:inset 1px 1px 2px black;
+        }
+    </style>
+    <script src="js/localstorage.js"></script>
+</head>
+<body>
+    <p class="inputArea">
+        <span class="label">ここにデータを入力</span>
+        <input id="inputData">
+    </p>
+    <p class="resultArea">
+        呼び出し結果：<span id="result">未呼び出し</span>
+    </p>
+    <p class="btArea">
+        <span type="button" id="btSave" class="button">保存</span>
+        <span type="button" id="btLoad" class="button">呼び出し</span>
+    </p>
+</body>
+</html>
