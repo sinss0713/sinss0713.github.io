@@ -8,24 +8,28 @@
         .inputArea > *{
             display:block;
         }
-        .resultArea{
-
-        }
         .button{
             width: 100px;;
             border: 1px solid black;
             border-radius: 10px;
             padding:2px 10px;
             box-shadow: 1px 1px 2px black;
-            user-select: none;            
+            user-select: none;
+            transform: 2s;
+            transition: 2s;
         }
         .button:active{
             box-shadow:inset 1px 1px 2px black;
+            transform: 2s;
+            transition: 2s;
         }
     </style>
     <script src="js/localstorage.js"></script>
 </head>
 <body>
+    <p class="statusArea">
+        <span id="status">ステータス：なし</span>
+    </p>
     <p class="inputArea">
         <span class="label">ここにデータを入力</span>
         <input id="inputData">
