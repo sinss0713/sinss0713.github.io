@@ -96,7 +96,7 @@ main{
     }
     main{
         margin: 100px 0 10px auto;
-        height:calc(100vh - 120px);
+        /* height:calc(100vh - 120px); */
     }
 
     .menu{
