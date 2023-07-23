@@ -50,3 +50,7 @@ main{
     margin-top: 10px;
     background-color: bisque;
 }
+footer{
+    display: flex;
+    justify-content: center;
+}
