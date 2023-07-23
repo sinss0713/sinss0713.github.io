@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
             status.textContent="何か入力してください。"
         }else{
             localStorage.setItem("data1",data1);
-            status.textContent = '"'+data1+'"をローカルストレージへ保存しました。'
+            status.textContent = 'ローカルストレージへ保存しました。'
         }
     });
     btLoad.addEventListener('click', ()=>{
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
             status.textContent = '保存されているデータはありません。';
         } else {
             result.textContent = resultData1;
-            status.textContent = '"'+resultData1+'"をローカルストレージから読み込みました。'    
+            status.textContent = 'ローカルストレージから読み込みました。'    
         };
     });
 

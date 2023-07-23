@@ -1,0 +1,52 @@
+header, main{
+    width: min(80%, 480px);
+    margin: 0 auto;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+main{
+    border: 1px solid black;
+    margin-top: 10px;
+    padding: 20px;
+    border-radius: 20px;
+}
+.inputArea > *{
+    display:block;
+    font-size:18px;
+}
+.btArea{
+    margin-top: 10px;
+}
+.button{
+    width: 100px;;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding:2px 10px;
+    box-shadow: 1px 1px 2px black;
+    user-select: none;
+    font-size:18px;
+}
+.button:hover{
+    background-color: #cef;
+    font-weight: bold;
+}
+.button:active{
+    box-shadow:inset 1px 1px 2px black;
+}
+.resultArea, .statusArea{
+    font-size:18px;
+    padding: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.resultArea{
+    margin-top: 30px;
+    background-color: lightblue;
+}
+.statusArea{
+    margin-top: 10px;
+    background-color: bisque;
+}
