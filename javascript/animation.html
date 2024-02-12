@@ -35,7 +35,6 @@
                 rocket.src='img/UFO2.png';
                 window.requestAnimationFrame(draw2);
             }
- 
             function draw2(){
                 let ctx2=document.getElementById('canvas2').getContext('2d');
                 let time = new Date();
@@ -52,6 +51,8 @@
                 window.requestAnimationFrame(draw2);
                 lblCounter.textContent=time.getSeconds()+'秒, rocketX:'+rocketX+', rocketY:'+rocketY;
             }
+            init();
+            
         })
     </script>
 </head>
@@ -60,7 +61,6 @@
     <div id="canvasContainer">
         <canvas id="canvas2" width="300" height="300"></canvas>
     </div>
-    <div><img src="img/UFO2.png"></div>
     <div>
         counter:<div id="lblCounter">none</div>
     </div>
