@@ -16,9 +16,12 @@
             background-color: black;
         }
         #canvas2{
-            width: 100%;
+            /* width: 100%; */
     	    /* border:1px solid blue; */
             background-color:black;
+        }
+        #canvasContainer{
+            width: 100%;
         }
         #lblCounter{
             background-color: orange;
@@ -31,26 +34,46 @@
             const lblCounter = document.getElementById('lblCounter');
             let rocketX=0;
             let rocketY=0;
+            const canvasContainer = document.getElementById('canvasContainer');
+            let cCWidth = canvasContainer.clientWidth;
+            let cCHeight = 80;
+            const canvas = document.getElementById('canvas2');
+            const rocketSpeed = 200;
             console.log(lblCounter.textContent);
             function init(){
                 rocket.src='img/UFO2.png';
                 window.requestAnimationFrame(draw2);
+                canvas.setAttribute('width', cCWidth.toString());
+                canvas.setAttribute('height', cCHeight.toString());
             }
+            window.addEventListener('resize',()=>{
+                cCWidth = canvasContainer.clientWidth;
+                // cCHeight = 100;
+                init();
+            })
             function draw2(){
                 let ctx2=document.getElementById('canvas2').getContext('2d');
                 let time = new Date();
                 ctx2.globalCompositeOperation='destination-over';
-                ctx2.clearRect(0, 0, 300, 300);
+                ctx2.clearRect(0, 0, cCWidth, cCHeight);
                 ctx2.fillStyle='rgba(0, 0, 255, 0.4)';
                 ctx2.strokeStyle='rgba(0, 153, 255, 1)';
                 ctx2.save();
-                rocketX=Math.round(((time.getSeconds())%3)*100+(time.getMilliseconds()/1000)*100)-20;
-                rocketY=Math.round(Math.sin(Math.PI/1.5*(time.getSeconds()%3+(time.getMilliseconds()/1000)))*130)+130;
+                const pi=Math.PI;
+                // rocketX=Math.round(((time.getSeconds())%rocketSpeed)*cCWidth/rocketSpeed+(time.getMilliseconds()/1000)*cCWidth/rocketSpeed)-20;
+                // 800：60%8*100
+                let baseX=Math.round(((time.getSeconds())%(Math.ceil(Math.ceil(cCWidth/100)*100/rocketSpeed)))*rocketSpeed);
+                rocketX = baseX + (time.getMilliseconds()/1000)*rocketSpeed;
+                // if(rocketX > cCWidth){
+                //     rocketX=Math.round(time.getMilliseconds()/1000*rocketSpeed)-20
+                // }
+                // rocketY=Math.round(Math.sin(2*pi/(cCWidth/rocketSpeed)*(time.getSeconds()%rocketSpeed+(time.getMilliseconds()/1000)))*(cCHeight/2-20))+(cCHeight/2-20);
+                rocketY=Math.round(Math.sin(2*pi*rocketSpeed/400*(time.getSeconds()%rocketSpeed+(time.getMilliseconds()/1000)))*(cCHeight/2-20))+(cCHeight/2-20);
                 ctx2.translate(rocketX,rocketY);
                 ctx2.drawImage(rocket,0,0,40,40);
                 ctx2.restore();
                 window.requestAnimationFrame(draw2);
-                lblCounter.textContent=time.getSeconds()+'秒, rocketX:'+rocketX+', rocketY:'+rocketY;
+                lblCounter.textContent=Math.ceil(Math.ceil(cCWidth/100)*100/rocketSpeed)+'baseX'+baseX+'px, '+ cCWidth+'px, '+time.getSeconds()+'秒, rocketX:'+rocketX+', rocketY:'+rocketY;
             }
             init();
             
