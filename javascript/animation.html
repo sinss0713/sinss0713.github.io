@@ -73,7 +73,7 @@
                 ctx2.drawImage(rocket,0,0,40,40);
                 ctx2.restore();
                 window.requestAnimationFrame(draw2);
-                lblCounter.textContent=Math.ceil(Math.ceil(cCWidth/100)*100/rocketSpeed)+'baseX'+baseX+'px, '+ cCWidth+'px, '+time.getSeconds()+'秒, rocketX:'+rocketX+', rocketY:'+rocketY;
+                lblCounter.textContent=Math.ceil(Math.ceil(cCWidth/100)*100/rocketSpeed)+'baseX'+baseX+'px, '+ cCWidth+'px, '+time.getSeconds()+'秒, rocketX:'+Math.round(rocketX)+', rocketY:'+Math.round(rocketY);
             }
             init();
             
