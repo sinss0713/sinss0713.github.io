@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ja-jp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>アニメーション</title>
+    <style>
+        body{
+            background-color: black;
+            color: aliceblue;
+        }
+        a{
+            color:aliceblue;
+        }
+        #canvasContainer{
+            background-color: black;
+        }
+        #canvas2{
+            /* width: 100%; */
+    	    /* border:1px solid blue; */
+            background-color:black;
+        }
+        #canvasContainer{
+            width: 100%;
+        }
+        #lblCounter{
+            background-color: orange;
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded',()=>{
+            const rocketImg = new Image();
+            const lblCounter = document.getElementById('lblCounter');
+            const canvasContainer = document.getElementById('canvasContainer');
+            const canvas = document.getElementById('canvas2');
+            const ctx = canvas.getContext('2d');
+            rocketImg.src = 'img/UFO2.png';
+
+            let raf;
+            let cCWidth = canvasContainer.clientWidth;
+            let cCHeight = 80;
+
+            const rocket = {
+                x:0,
+                y:0,
+                vx:5,
+                vy:2,
+                draw:function(){
+                    // ctx.translate(rocketX,rocketY);
+                    ctx.drawImage(rocketImg,this.x,this.y,40,40);
+                },
+            }
+
+            console.log(lblCounter.textContent);
+            function init(){
+                // rocket.src='img/UFO2.png';
+                // window.requestAnimationFrame(draw2);
+                canvas.setAttribute('width', cCWidth.toString());
+                canvas.setAttribute('height', cCHeight.toString());
+            }
+            window.addEventListener('resize',()=>{
+                cCWidth = canvasContainer.clientWidth;
+                // cCHeight = 100;
+                init();
+            })
+            function draw(){
+                ctx.clearRect(0, 0, cCWidth, cCHeight);
+                rocket.draw();
+                rocket.x += rocket.vx;
+                if(rocket.x > cCWidth - 40){rocket.vx=-5};
+                if(rocket.x < 0){rocket.vx = 5};
+                rocket.y += rocket.vy;
+                if(rocket.y > cCHeight-40){rocket.vy=-2};
+                if(rocket.y < 0){rocket.vy=2};
+                raf= window.requestAnimationFrame(draw);
+                lblCounter.textContent = cCWidth+'px, '+'rocketX:'+rocket.x+', rocketY:'+rocket.y;
+            }
+            // canvas.addEventListener('mouseover',(e)=>{
+            //     raf = window.requestAnimationFrame(draw);
+            // })
+            // canvas.addEventListener('mouseout',(e)=>{
+            //     window.cancelAnimationFrame(raf);
+            // })
+            init();
+            raf = window.requestAnimationFrame(draw);
+        })
+    </script>
+</head>
+<body>
+    <h1>アニメーション練習</h1>
+    <div id="canvasContainer">
+        <canvas id="canvas2" width="300" height="300"></canvas>
+    </div>
+    <div>
+        counter:<div id="lblCounter">none</div>
+    </div>
+    <a href="/javascript/">Javasctipt</a>
+</body>
+</html>

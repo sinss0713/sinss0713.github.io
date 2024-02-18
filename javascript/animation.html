@@ -59,11 +59,12 @@
                 ctx2.fillStyle='rgba(0, 0, 255, 0.4)';
                 ctx2.strokeStyle='rgba(0, 153, 255, 1)';
                 ctx2.save();
-                const pi=Math.PI;
+                const pi = Math.PI;
                 // rocketX=Math.round(((time.getSeconds())%rocketSpeed)*cCWidth/rocketSpeed+(time.getMilliseconds()/1000)*cCWidth/rocketSpeed)-20;
                 // 800：60%8*100
-                let baseX=Math.round(((time.getSeconds())%(Math.ceil(Math.ceil(cCWidth/100)*100/rocketSpeed)))*rocketSpeed);
+                let baseX = Math.round(((time.getSeconds())%(Math.ceil(Math.ceil(cCWidth/100)*100/rocketSpeed)))*rocketSpeed);
                 rocketX = baseX + (time.getMilliseconds()/1000)*rocketSpeed;
+                // rocketX = baseX + (time.getMilliseconds()/1000)*rocketSpeed;
                 // if(rocketX > cCWidth){
                 //     rocketX=Math.round(time.getMilliseconds()/1000*rocketSpeed)-20
                 // }
@@ -75,8 +76,7 @@
                 window.requestAnimationFrame(draw2);
                 lblCounter.textContent=Math.ceil(Math.ceil(cCWidth/100)*100/rocketSpeed)+'baseX'+baseX+'px, '+ cCWidth+'px, '+time.getSeconds()+'秒, rocketX:'+Math.round(rocketX)+', rocketY:'+Math.round(rocketY);
             }
-            init();
-            
+            init();            
         })
     </script>
 </head>
