@@ -39,12 +39,13 @@
 
             let raf;
             let cCWidth = canvasContainer.clientWidth;
-            let cCHeight = 80;
+            let cCHeight = canvasContainer.clientHeight;
+            // let cCHeight = 300;
 
             const rocket = {
                 x:0,
                 y:0,
-                vx:5,
+                vx:3,
                 vy:2,
                 draw:function(){
                     // ctx.translate(rocketX,rocketY);
@@ -68,8 +69,8 @@
                 ctx.clearRect(0, 0, cCWidth, cCHeight);
                 rocket.draw();
                 rocket.x += rocket.vx;
-                if(rocket.x > cCWidth - 40){rocket.vx=-5};
-                if(rocket.x < 0){rocket.vx = 5};
+                if(rocket.x > cCWidth - 40){rocket.vx=-3};
+                if(rocket.x < 0){rocket.vx = 3};
                 rocket.y += rocket.vy;
                 if(rocket.y > cCHeight-40){rocket.vy=-2};
                 if(rocket.y < 0){rocket.vy=2};
@@ -88,7 +89,7 @@
     </script>
 </head>
 <body>
-    <h1>アニメーション練習</h1>
+    <h1>アニメーション練習2</h1>
     <div id="canvasContainer">
         <canvas id="canvas2" width="300" height="300"></canvas>
     </div>
