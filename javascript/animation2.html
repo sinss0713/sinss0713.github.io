@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>アニメーション</title>
+    <title>アニメーション2</title>
     <style>
         body{
             background-color: black;
@@ -45,8 +45,8 @@
             const rocket = {
                 x:0,
                 y:0,
-                vx:3,
-                vy:2,
+                vx:8,
+                vy:5,
                 draw:function(){
                     // ctx.translate(rocketX,rocketY);
                     ctx.drawImage(rocketImg,this.x,this.y,40,40);
@@ -66,14 +66,14 @@
                 init();
             })
             function draw(){
-                ctx.clearRect(0, 0, cCWidth, cCHeight);
+                // ctx.clearRect(0, 0, cCWidth, cCHeight);
+                ctx.fillStyle = 'rgba(0,0,0,0.5)';
+                ctx.fillRect(0,0,cCWidth,cCHeight);
                 rocket.draw();
                 rocket.x += rocket.vx;
-                if(rocket.x > cCWidth - 40){rocket.vx=-3};
-                if(rocket.x < 0){rocket.vx = 3};
+                if(rocket.x < 0 || rocket.x > cCWidth - 40){rocket.vx=-rocket.vx};
                 rocket.y += rocket.vy;
-                if(rocket.y > cCHeight-40){rocket.vy=-2};
-                if(rocket.y < 0){rocket.vy=2};
+                if(rocket.y < 0 || rocket.y > cCHeight-40){rocket.vy=-rocket.vy};
                 raf= window.requestAnimationFrame(draw);
                 lblCounter.textContent = cCWidth+'px, '+'rocketX:'+rocket.x+', rocketY:'+rocket.y;
             }
