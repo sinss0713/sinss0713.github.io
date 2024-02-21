@@ -106,12 +106,12 @@
                     ctx.stroke();
 
                     ctx.translate(-150,0);
-                    const start = {x:300,y:300,rad:6,style:"rgba(100,100,255,1)",label:'start'};
-                    const cStart = {x:180,y:300,rad:6,style:"rgba(100,100,255,1)",label:'cStart'};
-                    const cEnd = {x:300,y:180,rad:6,style:"rgba(100,100,255,1)",label:'cEnd'};
-                    const start2 = {x:300,y:300,rad:6,style:"rgba(255,0,0,1)",label:'Start2'};
-                    const cStart2 = {x:420,y:50,rad:6,style:"rgba(100,100,255,1)",label:'cStart2'};
-                    const cEnd2 = {x:420,y:300,rad:6,style:"rgba(100,100,255,1)",label:'cEnd2'};
+                    const start = {x:150,y:400,rad:6,style:"rgba(100,100,255,1)",label:'start'};
+                    const cStart = {x:30,y:400,rad:6,style:"rgba(100,100,255,1)",label:'cStart'};
+                    const cEnd = {x:150,y:280,rad:6,style:"rgba(100,100,255,1)",label:'cEnd'};
+                    const start2 = {x:150,y:400,rad:6,style:"rgba(255,0,0,1)",label:'Start2'};
+                    const cStart2 = {x:270,y:150,rad:6,style:"rgba(100,100,255,1)",label:'cStart2'};
+                    const cEnd2 = {x:270,y:400,rad:6,style:"rgba(100,100,255,1)",label:'cEnd2'};
 
                     if(flgSubLine){
                         drawSubLine(start,cStart);
@@ -146,7 +146,7 @@
                     // drawSubLine(cEnd2,start);
                     ctx.fillStyle ='black';
                     ctx.font='18px serif';
-                    ctx.fillText('arcToで描画',290,240);
+                    ctx.fillText('arcToで描画',start.x-10,start.y-60);
                     // raf = requestAnimationFrame(draw2);
                 }
             }
