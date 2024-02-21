@@ -47,6 +47,7 @@
                 y:0,
                 vx:5,
                 vy:3,
+                move:true,
                 draw:function(){
                     // ctx.translate(rocketX,rocketY);
                     ctx.drawImage(rocketImg,this.x,this.y,40,40);
@@ -65,16 +66,24 @@
                 // cCHeight = 100;
                 init();
             })
+            canvas.addEventListener('click',()=>{
+                rocket.move = !rocket.move;
+                draw();
+            });
             function draw(){
                 // ctx.clearRect(0, 0, cCWidth, cCHeight);
-                ctx.fillStyle = 'rgba(0,0,0,0.2)';
+                ctx.fillStyle = 'rgba(0,0,0,0.3)';
                 ctx.fillRect(0,0,cCWidth,cCHeight);
                 rocket.draw();
                 rocket.x += rocket.vx;
                 if(rocket.x < 0 || rocket.x > cCWidth - 40){rocket.vx=-rocket.vx};
                 rocket.y += rocket.vy;
                 if(rocket.y < 0 || rocket.y > cCHeight-40){rocket.vy=-rocket.vy};
-                raf= window.requestAnimationFrame(draw);
+                if(rocket.move){
+                    raf= window.requestAnimationFrame(draw);
+                }else{
+                    window.cancelAnimationFrame(raf);
+                }
                 lblCounter.textContent = cCWidth+'px, '+'rocketX:'+rocket.x+', rocketY:'+rocket.y;
             }
             // canvas.addEventListener('mouseover',(e)=>{
