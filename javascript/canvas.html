@@ -31,19 +31,49 @@
             const status = document.getElementById('status');
             let cWidth = cContainer.clientWidth;
             let cHeight = cContainer.clientHeight;
-            canvas1.setAttribute("width",cWidth);
-            canvas1.setAttribute("height",cHeight);
+            let flgSubLine = false;
+            resizeCanvas();
 
             canvas1.addEventListener('mousemove',(e)=>{
                 const rect = canvas1.getBoundingClientRect();
-                mouseX = e.clientX  - Math.round(rect.left);
-                mouseY = e.clientY - Math.round(rect.top);
-                status.textContent="x:"+mouseX+' ,y:'+mouseY;
+                const mousePos = getMousePos(e,rect);
+                strStatus = 'mouseX:'+mousePos.x+' ,mouseY:'+mousePos.y;
+                updateStatus(strStatus);
+            });
+
+            window.addEventListener('resize',()=>{
+                resizeCanvas();
+                draw();
+                updateStatus('');
+            });
+
+            canvas1.addEventListener('click',(e)=>{
+                flgSubLine = !flgSubLine;
+                draw();
             })
 
+            function getMousePos(e,rect){
+                const mouseX = e.clientX  - Math.round(rect.left);
+                const mouseY = e.clientY - Math.round(rect.top);
+                return {x:mouseX,y:mouseY};
+            }
+            function updateStatus(strStatus){
+                if(strStatus != ''){
+                    status.textContent = 'containerSize:'+cWidth+' x '+cHeight+', '+strStatus;
+                }else{
+                    status.textContent = 'containerSize:'+cWidth+' x '+cHeight;
+                }
+            }
+            function resizeCanvas(){
+                cWidth=cContainer.clientWidth;
+                cHeight=cContainer.clientHeight;
+                canvas1.setAttribute("width",cWidth);
+                canvas1.setAttribute("height",cHeight);
+            }
             function draw(){
                 if(canvas1.getContext){
                     const ctx = canvas1.getContext('2d');
+                    ctx.clearRect(0,0,cWidth,cHeight);
                     ctx.fillStyle = "rgb(200,0,0)";
                     ctx.fillRect(10,10,50,50);
                     ctx.fillStyle = "rgba(0,0,200,0.5)";
@@ -75,50 +105,83 @@
                     ctx.fill();
                     ctx.stroke();
 
-                    const start = {x:300,y:300,rad:6,style:"rgba(255,0,0,1)"};
-                    const cStart = {x:180,y:280,rad:6,style:"rgba(100,100,255,1)"};
-                    const cEnd = {x:355,y:80,rad:6,style:"rgba(100,100,255,1)"};
+                    ctx.translate(-150,0);
+                    const start = {x:300,y:300,rad:6,style:"rgba(100,100,255,1)",label:'start'};
+                    const cStart = {x:180,y:300,rad:6,style:"rgba(100,100,255,1)",label:'cStart'};
+                    const cEnd = {x:300,y:180,rad:6,style:"rgba(100,100,255,1)",label:'cEnd'};
+                    const start2 = {x:300,y:300,rad:6,style:"rgba(255,0,0,1)",label:'Start2'};
+                    const cStart2 = {x:420,y:50,rad:6,style:"rgba(100,100,255,1)",label:'cStart2'};
+                    const cEnd2 = {x:420,y:300,rad:6,style:"rgba(100,100,255,1)",label:'cEnd2'};
 
-                    ctx.beginPath();
-                    ctx.fillStyle = start.style;
-                    ctx.moveTo(start.x,start.y);
-                    ctx.arc(start.x,start.y,start.rad,0,Math.PI*2);
-                    ctx.fill();
-
-                    ctx.beginPath();
-                    ctx.fillStyle = cStart.style;
-                    ctx.strokeStyle = 'rgb(0,0,255)';
-                    ctx.moveTo(cStart.x,cStart.y);
-                    ctx.arc(cStart.x,cStart.y,cStart.rad,0,Math.PI*2);
-                    ctx.fill();
-
-                    ctx.beginPath();
-                    ctx.fillStyle = cEnd.style;
-                    ctx.moveTo(cEnd.x,cEnd.y);
-                    ctx.arc(cEnd.x,cEnd.y,cEnd.rad,0,Math.PI*2);
-                    ctx.fill();
-
-                    ctx.beginPath();
-                    ctx.moveTo(cEnd.x,cEnd.y);
-                    ctx.lineTo(cStart.x,cStart.y,cEnd.x,cEnd.y);
-                    ctx.stroke();
+                    if(flgSubLine){
+                        drawSubLine(start,cStart);
+                        drawSubLine(cStart,cEnd);
+                        drawSubLine(cStart2,cEnd2);
+                        drawSubLine(cEnd,cStart2);
+                        drawSubLine(cEnd2,start);    
+                    }
 
                     ctx.beginPath();
                     ctx.strokeStyle = 'black';
                     ctx.lineWidth = 3;
                     ctx.moveTo(start.x,start.y);
                     // ctx.moveTo(500,500);
-                    ctx.arcTo(cStart.x,cStart.y,cEnd.x,cEnd.y,50);
+                    ctx.arcTo(cStart.x,cStart.y,cEnd.x,cEnd.y,32);
                     ctx.stroke();
 
+                    ctx.strokeStyle = 'black';
+                    ctx.lineTo(cEnd.x,cEnd.y);
+                    ctx.stroke();
+                    // ctx.beginPath();
+                    // drawSubLine(cEnd,cStart2);
                     ctx.beginPath();
-                    // ctx.moveTo(250,250);
-                    // ctx.arc(250,250,cEnd.rad,0,Math.PI*2);
-                    ctx.strokeStyle = 'green';
-                    ctx.arcTo(cStart.x,cStart.y,cEnd.x,cEnd.y,10);
+                    ctx.lineWidth = 3;
+                    ctx.strokeStyle = 'black';
+                    ctx.moveTo(cEnd.x,cEnd.y);
+                    ctx.arcTo(cStart2.x,cStart2.y,cEnd2.x,cEnd2.y,32);
+                    ctx.arcTo(cEnd2.x,cEnd2.y,start.x,start.y,32);
+                    ctx.lineTo(start.x,start.y);
+                    // ctx.lineTo(cStart2.x,cStart2.y);
                     ctx.stroke();
-
+                    // drawSubLine(cEnd2,start);
+                    ctx.fillStyle ='black';
+                    ctx.font='18px serif';
+                    ctx.fillText('arcToで描画',290,240);
+                    // raf = requestAnimationFrame(draw2);
                 }
+            }
+            function draw2(){
+                const ctx = canvas1.getContext('2d');
+                // ctx.clearRect(0,0,cWidth,cHeight);
+                drawSubLine(start,cStart);
+                drawSubLine(cStart,cEnd);
+                drawSubLine(cStart2,cEnd2);
+                drawSubLine(cEnd,cStart2);
+                drawSubLine(cEnd2,start);
+            };
+            function drawSubLine(objStart,objEnd){
+                const ctx = canvas1.getContext('2d');
+                ctx.font = '12px serif';
+                ctx.lineWidth = 1;
+                ctx.strokeStyle = objStart.style;
+                ctx.fillStyle = objStart.style;
+                // console.log(objStart.style);
+                ctx.beginPath();
+                ctx.moveTo(objStart.x,objStart.y);
+                ctx.arc(objStart.x,objStart.y,objStart.rad,0,Math.PI*2);
+                ctx.fillText(objStart.label,objStart.x-10,objStart.y+20);
+                ctx.fill();
+                ctx.beginPath();
+                ctx.moveTo(objStart.x,objStart.y);
+                ctx.lineTo(objEnd.x,objEnd.y);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.arc(objEnd.x,objEnd.y,objStart.rad,0,Math.PI*2);
+                ctx.fill();
+                ctx.fillText(objEnd.label,objEnd.x-10,objEnd.y+20);
+                ctx.stroke()
+                ctx.closePath();
+                // ctx.moveTo(objEnd.x,objEnd.y);
             }
             draw();
         })
