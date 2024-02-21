@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ja-jp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>キャンバステスト</title>
+    <style>
+        /* canvasContainerの高さをブラウザの高さにしたい場合、その祖先bodyとhtmlも100%にする必要がある */
+        #canvasContainer{
+            margin:10px;
+            width: calc(100% - 20px);
+            height:100%;
+            border:1px dashed red;
+            /* background-color: black; */
+        }
+        #canvas1{
+            border:1px solid blue;
+        }
+        html{
+            height:calc(100% - 100px);
+        }
+        body{
+            height:100%;
+            background-color: aliceblue;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded',()=>{
+            const canvas1 = document.getElementById('canvas1');
+            const cContainer = document.getElementById('canvasContainer');
+            let cWidth = cContainer.clientWidth;
+            let cHeight = cContainer.clientHeight;
+            canvas1.setAttribute("width",cWidth);
+            canvas1.setAttribute("height",cHeight);
+            function draw(){
+                if(canvas1.getContext){
+                    const ctx = canvas1.getContext('2d');
+                    ctx.fillStyle = "rgb(200,0,0)";
+                    ctx.fillRect(10,10,50,50);
+                    ctx.fillStyle = "rgba(0,0,200,0.5)";
+                    ctx.fillRect(30,30,50,50);
+                    ctx.clearRect(20,20,50,50);
+                    ctx.strokeStyle = "rgb(0,200,0)";
+                    ctx.strokeRect(25,25,40,40);
+                    ctx.beginPath();
+                    ctx.moveTo(100,50); //指定した座標への移動
+                    ctx.lineTo(125,75);
+                    ctx.lineTo(125,25);
+                    ctx.fill();
+                    ctx.strokeStyle = "black";
+                    ctx.translate(150,0);
+                    ctx.beginPath();
+                    ctx.fillStyle = "yellow";
+                    ctx.arc(75,75,50,0,Math.PI*2, true);
+                    ctx.fill();
+                    ctx.moveTo(110,75);
+                    ctx.arc(75,75,35,0,Math.PI,false);
+                    ctx.stroke();
+
+                    ctx.beginPath();
+                    ctx.fillStyle = "black";
+                    ctx.moveTo(65,65);
+                    ctx.arc(60,65,5,0,Math.PI*2,true);
+                    ctx.moveTo(95,65);
+                    ctx.arc(90,65,5,0,Math.PI*2,true);
+                    ctx.fill();
+                    ctx.stroke();
+
+                    const start = {x:300,y:300,rad:6,style:"rgba(255,0,0,1)"};
+                    const cStart = {x:180,y:280,rad:6,style:"rgba(100,100,255,1)"};
+                    const cEnd = {x:355,y:80,rad:6,style:"rgba(100,100,255,1)"};
+
+                    ctx.beginPath();
+                    ctx.fillStyle = start.style;
+                    ctx.moveTo(start.x,start.y);
+                    ctx.arc(start.x,start.y,start.rad,0,Math.PI*2);
+                    ctx.fill();
+
+                    ctx.beginPath();
+                    ctx.fillStyle = cStart.style;
+                    ctx.strokeStyle = 'rgb(0,0,255)';
+                    ctx.moveTo(cStart.x,cStart.y);
+                    ctx.arc(cStart.x,cStart.y,cStart.rad,0,Math.PI*2);
+                    ctx.fill();
+
+                    ctx.beginPath();
+                    ctx.fillStyle = cEnd.style;
+                    ctx.moveTo(cEnd.x,cEnd.y);
+                    ctx.arc(cEnd.x,cEnd.y,cEnd.rad,0,Math.PI*2);
+                    ctx.fill();
+
+                    ctx.beginPath();
+                    ctx.moveTo(cEnd.x,cEnd.y);
+                    ctx.lineTo(cStart.x,cStart.y,cEnd.x,cEnd.y);
+                    ctx.stroke();
+
+                    ctx.beginPath();
+                    ctx.strokeStyle = 'black';
+                    ctx.lineWidth = 3;
+                    ctx.moveTo(start.x,start.y);
+                    // ctx.moveTo(500,500);
+                    ctx.arcTo(cStart.x,cStart.y,cEnd.x,cEnd.y,50);
+                    ctx.stroke();
+                }
+            }
+            draw();
+        })
+    </script>
+</head>
+<body>
+    <h1>キャンバステスト</h1>
+    <div id="canvasContainer">
+        <canvas id="canvas1">これはキャンバスです</canvas>
+    </div>
+</body>
+</html>
