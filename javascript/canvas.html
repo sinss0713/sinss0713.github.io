@@ -17,7 +17,7 @@
             border:1px solid blue;
         }
         html{
-            height:calc(100% - 100px);
+            height:calc(100% - 150px);
         }
         body{
             height:100%;
@@ -28,10 +28,19 @@
         document.addEventListener('DOMContentLoaded',()=>{
             const canvas1 = document.getElementById('canvas1');
             const cContainer = document.getElementById('canvasContainer');
+            const status = document.getElementById('status');
             let cWidth = cContainer.clientWidth;
             let cHeight = cContainer.clientHeight;
             canvas1.setAttribute("width",cWidth);
             canvas1.setAttribute("height",cHeight);
+
+            canvas1.addEventListener('mousemove',(e)=>{
+                const rect = canvas1.getBoundingClientRect();
+                mouseX = e.clientX  - Math.round(rect.left);
+                mouseY = e.clientY - Math.round(rect.top);
+                status.textContent="x:"+mouseX+' ,y:'+mouseY;
+            })
+
             function draw(){
                 if(canvas1.getContext){
                     const ctx = canvas1.getContext('2d');
@@ -101,6 +110,14 @@
                     // ctx.moveTo(500,500);
                     ctx.arcTo(cStart.x,cStart.y,cEnd.x,cEnd.y,50);
                     ctx.stroke();
+
+                    ctx.beginPath();
+                    // ctx.moveTo(250,250);
+                    // ctx.arc(250,250,cEnd.rad,0,Math.PI*2);
+                    ctx.strokeStyle = 'green';
+                    ctx.arcTo(cStart.x,cStart.y,cEnd.x,cEnd.y,10);
+                    ctx.stroke();
+
                 }
             }
             draw();
@@ -112,5 +129,6 @@
     <div id="canvasContainer">
         <canvas id="canvas1">これはキャンバスです</canvas>
     </div>
+    <div id="status">status</div>
 </body>
 </html>
