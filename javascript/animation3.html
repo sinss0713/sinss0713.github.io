@@ -31,6 +31,10 @@
         #lblCounter{
             background-color: darkblue;
         }
+        #rangerNum{
+            width: 30%;
+            height:30px;
+        }
     </style>
 
     <script>
@@ -149,13 +153,13 @@
 </head>
 <body>
     <h1>アニメーション練習3</h1>
+    <input type="range" id="rangerNum" min="1" max="15"><span id="lblrNum"></span><br>
     <div id="canvasContainer">
         <canvas id="canvas2" width="300" height="300"></canvas>
     </div>
     <div>
         status:<div id="lblCounter">none</div>
     </div>
-    <input type="range" id="rangerNum" min="1" max="15"><span id="lblrNum"></span>
     <a href="/javascript/">Javasctipt</a>
 </body>
 </html>
