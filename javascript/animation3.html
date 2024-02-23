@@ -119,15 +119,21 @@
             function draw(){
                 let strStatus = 'canvas:'+cCWidth+'x'+cCHeight+', rNum:'+rNum;
                 // ctx.clearRect(0, 0, cCWidth, cCHeight);
-                ctx.fillStyle = 'rgba(0,0,0,0.3)';
+                ctx.fillStyle = 'rgba(0,0,0,1)';
                 ctx.fillRect(0,0,cCWidth,cCHeight);
                 for(let i=0; i<=rNum-1; i++){
                     rocket[i].draw();
+                    ctx.fillStyle = 'white';
+                    ctx.font = '14px serif';
+                    const uStatus = 'x:'+rocket[i].x+', y:'+rocket[i].y;
+                    const uStatusLength = ctx.measureText(uStatus).width;
+                    ctx.fillText(uStatus,rocket[i].x-((uStatusLength - 40)/2),rocket[i].y+60);
+                    ctx.fill();
                     rocket[i].x = Math.round(rocket[i].x + rocket[i].vx);
                     if(rocket[i].x < 0 || rocket[i].x > cCWidth - 40){rocket[i].vx=-rocket[i].vx};
                     rocket[i].y = Math.round(rocket[i].y + rocket[i].vy);
                     if(rocket[i].y < 0 || rocket[i].y > cCHeight-40){rocket[i].vy=-rocket[i].vy};
-                    strStatus += ', #'+i+' x:'+rocket[i].x.toString().padStart(4, '  ');+' y:'+rocket[i].y.toString().padStart(4, '     ');
+                    // strStatus += ', #'+i+' x:'+rocket[i].x.toString().padStart(4, '  ');+' y:'+rocket[i].y.toString().padStart(4, '     ');
                 }
                 if(flgMove){
                     raf= window.requestAnimationFrame(draw);
