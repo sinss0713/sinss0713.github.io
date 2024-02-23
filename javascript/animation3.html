@@ -144,15 +144,14 @@
                 ctx.fillStyle = 'rgba(0,0,0,0.3)';
                 ctx.fillRect(0,0,cCWidth,cCHeight);
 
-                // ctx.clearRect(0, 0, cCWidth, cCHeight);
                 ctx.fillStyle = 'rgba(20,60,20,0.5)';
-                ctx.fillRect(0,0,150,180)
+                ctx.fillRect(0,0,150,rNum*20+15)
 
                 for(let i=0; i<=rNum-1; i++){
-                    if(i==0 && logLimit<10){
-                        console.log('#0 ,x:',rocket[i].x,', y:',rocket[i].y,', vx:',rocket[i].vx,', vy:',rocket[i].vy)
-                        logLimit++;
-                    }
+                    // if(i==0 && logLimit<10){
+                    //     console.log('#0 ,x:',rocket[i].x,', y:',rocket[i].y,', vx:',rocket[i].vx,', vy:',rocket[i].vy)
+                    //     logLimit++;
+                    // }
 
                     rocket[i].draw();
 
@@ -160,16 +159,8 @@
                     ctx.font = '14px bold serif';
                     const uStatus = '#'+i+',  x:'+rocket[i].x.toString().padStart(4,'___')+',  y:'+rocket[i].y.toString().padStart(4,'___');
                     const uStatusWidth = ctx.measureText(uStatus).width;
-                    // console.log('uStatusHeight:'+uStatusHeight);
-                    // ctx.fill();
                     
                     ctx.fillText(uStatus,10,i*20+22);
-                    // ctx.fillText(uStatus,rocket[i].x - (uStatusWidth-40)/2,rocket[i].y + 60);
-
-                    // ctx.fillRect(rocket[i].x-((uStatusWidth - 40)/2), rocket[i].y+60, uStatus,rocket[i].x-((uStatusWidth - 40)/2)+uStatusWidth, rocket[i].y+60+uStatusHeight)
-                    // ctx.fillStyle = 'blue';
-                    // ctx.fillRect(rocket[i].x,rocket[i].y,20,20);
-                    // ctx.fill()
 
                     rocket[i].x = Math.round(rocket[i].x + rocket[i].vx);
                     if(rocket[i].x < 0 || rocket[i].x > cCWidth - 40){rocket[i].vx = -rocket[i].vx};
