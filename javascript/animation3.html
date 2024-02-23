@@ -31,8 +31,8 @@
         #lblCounter{
             background-color: darkblue;
         }
-        #rangerNum{
-            width: 30%;
+        #rangerNum, #rangeVx, #rangeVy{
+            width: 25%;
             height:30px;
         }
     </style>
@@ -43,12 +43,21 @@
             const lblCounter = document.getElementById('lblCounter');
             const canvasContainer = document.getElementById('canvasContainer');
             const canvas = document.getElementById('canvas2');
+            let logLimit = 0;
+
             const rangerNum = document.getElementById('rangerNum');
             const lblrNum = document.getElementById('lblrNum');
+            const rangeVx = document.getElementById('rangeVx');
+            const lblVx = document.getElementById('lblVx');
+            const rangeVy = document.getElementById('rangeVy');
+            const lblVy = document.getElementById('lblVy');
+
             const ctx = canvas.getContext('2d');
             rocketImg.src = 'img/UFO2.png';
             let flgMove = true;
             let rNum = 1;
+            let vx = 5;
+            let vy = 3;
             let rocket;
 
             let raf;
@@ -77,38 +86,48 @@
                 // rNum = Math.floor(Math.random()*6)+3;
                 rNum = rangerNum.value;
                 lblrNum.textContent = rNum;
+                let vx = parseInt(rangeVx.value);
+                lblVx.textContent = vx;
+                let vy = parseInt(rangeVy.value);
+                lblVy.textContent = vy;
                 rocket= new Array(rNum);
                 for(i=0; i<=rNum-1; i++){
-                    let vx = 5;
-                    let vy = 3;
                     let x = 0;
                     let y = 0;
                     switch(i % 3){
                         case 0:
-                            vx = 5;
-                            vy = 3
+                            vx = vx;
+                            vy = vy;
                             break;
                         case 1:
-                            vx = -5;
-                            vy = -3;
+                            vx = -vx;
+                            vy = -vy;
                             break;
                         case 2:
-                            vx = 5;
-                            vy = -3;
+                            vx = vx;
+                            vy = -vy;
                             break;
                         default:
-                            vx = 5;
-                            vy = 3;
+                            vx = vx;
+                            vy = vy;
                     }
                     x = Math.floor(Math.random()*(cCWidth - 100)) + 50;
                     y = Math.floor(Math.random()*(cCHeight - 100)) + 50;
+                    // console.log('#',i,', x:',x,', y:',y,', vx:',vx,', vy:',vy);
                     rocket[i] = new Rocket(x,y,vx,vy);
                 }
             }
 
             rangerNum.addEventListener('change',()=>{
                 init();
+            });
+            rangeVx.addEventListener('change',()=>{
+                init();
+            });
+            rangeVy.addEventListener('change',()=>{
+                init();
             })
+
 
             console.log(lblCounter.textContent);
             window.addEventListener('resize',()=>{
@@ -122,21 +141,40 @@
             });
             function draw(){
                 let strStatus = 'canvas:'+cCWidth+'x'+cCHeight+', rNum:'+rNum;
-                // ctx.clearRect(0, 0, cCWidth, cCHeight);
-                ctx.fillStyle = 'rgba(0,0,0,1)';
+                ctx.fillStyle = 'rgba(0,0,0,0.3)';
                 ctx.fillRect(0,0,cCWidth,cCHeight);
+
+                // ctx.clearRect(0, 0, cCWidth, cCHeight);
+                ctx.fillStyle = 'rgba(20,60,20,0.5)';
+                ctx.fillRect(0,0,150,180)
+
                 for(let i=0; i<=rNum-1; i++){
+                    if(i==0 && logLimit<10){
+                        console.log('#0 ,x:',rocket[i].x,', y:',rocket[i].y,', vx:',rocket[i].vx,', vy:',rocket[i].vy)
+                        logLimit++;
+                    }
+
                     rocket[i].draw();
+
                     ctx.fillStyle = 'white';
-                    ctx.font = '14px serif';
-                    const uStatus = 'x:'+rocket[i].x+', y:'+rocket[i].y;
-                    const uStatusLength = ctx.measureText(uStatus).width;
-                    ctx.fillText(uStatus,rocket[i].x-((uStatusLength - 40)/2),rocket[i].y+60);
-                    ctx.fill();
+                    ctx.font = '14px bold serif';
+                    const uStatus = '#'+i+',  x:'+rocket[i].x.toString().padStart(4,'___')+',  y:'+rocket[i].y.toString().padStart(4,'___');
+                    const uStatusWidth = ctx.measureText(uStatus).width;
+                    // console.log('uStatusHeight:'+uStatusHeight);
+                    // ctx.fill();
+                    
+                    ctx.fillText(uStatus,10,i*20+22);
+                    // ctx.fillText(uStatus,rocket[i].x - (uStatusWidth-40)/2,rocket[i].y + 60);
+
+                    // ctx.fillRect(rocket[i].x-((uStatusWidth - 40)/2), rocket[i].y+60, uStatus,rocket[i].x-((uStatusWidth - 40)/2)+uStatusWidth, rocket[i].y+60+uStatusHeight)
+                    // ctx.fillStyle = 'blue';
+                    // ctx.fillRect(rocket[i].x,rocket[i].y,20,20);
+                    // ctx.fill()
+
                     rocket[i].x = Math.round(rocket[i].x + rocket[i].vx);
-                    if(rocket[i].x < 0 || rocket[i].x > cCWidth - 40){rocket[i].vx=-rocket[i].vx};
+                    if(rocket[i].x < 0 || rocket[i].x > cCWidth - 40){rocket[i].vx = -rocket[i].vx};
                     rocket[i].y = Math.round(rocket[i].y + rocket[i].vy);
-                    if(rocket[i].y < 0 || rocket[i].y > cCHeight-40){rocket[i].vy=-rocket[i].vy};
+                    if(rocket[i].y < 0 || rocket[i].y > cCHeight - 40){rocket[i].vy = -rocket[i].vy};
                     // strStatus += ', #'+i+' x:'+rocket[i].x.toString().padStart(4, '  ');+' y:'+rocket[i].y.toString().padStart(4, '     ');
                 }
                 if(flgMove){
@@ -153,13 +191,15 @@
 </head>
 <body>
     <h1>アニメーション練習3</h1>
-    <input type="range" id="rangerNum" min="1" max="15"><span id="lblrNum"></span><br>
     <div id="canvasContainer">
         <canvas id="canvas2" width="300" height="300"></canvas>
     </div>
     <div>
         status:<div id="lblCounter">none</div>
     </div>
+    <input type="range" id="rangerNum" min="1" max="15"><span id="lblrNum"></span>
+    <input type="range" id="rangeVx" min="1" max="10" value="5"><span id="lblVx"></span>
+    <input type="range" id="rangeVy" min="1" max="8" value="3"><span id="lblVy"></span><br>
     <a href="/javascript/">Javasctipt</a>
 </body>
 </html>
