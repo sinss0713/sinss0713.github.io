@@ -67,8 +67,8 @@
             let flgMove = true;
             let rNum = 1;
             let alpha = 0.5;
-            let vx = 5;
-            let vy = 3;
+            let vxMax = 5;
+            let vyMax = 3;
             let rocket;
 
             let raf;
@@ -99,28 +99,33 @@
                 lblrNum.textContent = 'UFOの数：'+rNum;
                 alpha = parseFloat(rangeAlpha.value);
                 lblAlpha.textContent = 'アルファ：'+alpha;
-                vx = parseInt(rangeVx.value);
-                lblVx.textContent = 'vx：'+vx;
-                vy = parseInt(rangeVy.value);
-                lblVy.textContent = 'vy：'+vy;
+                vxMax = parseInt(rangeVx.value);
+                lblVx.textContent = 'vx最大値：'+vxMax;
+                vyMax = parseInt(rangeVy.value);
+                lblVy.textContent = 'vy最大値：'+vyMax;
                 rocket= new Array(rNum);
                 for(i=0; i<=rNum-1; i++){
                     let x = 0;
                     let y = 0;
                     switch(i % 3){
                         case 0:
-                            vx = vx;
-                            vy = vy;
-                            // vx = Math.floor(Math.random()*10+1);
-                            // vy = Math.floor(Math.random()*8+1);
+                            // vx = vx;
+                            // vy = vy;
+                            vx = Math.floor(Math.random()*vxMax+1);
+                            vy = Math.floor(Math.random()*vyMax+1);
                             break;
                         case 1:
-                            vx = -vx;
-                            vy = -vy;
+                            // vx = -vx;
+                            // vy = -vy;
+                            vx = -Math.floor(Math.random()*vxMax+1);
+                            vy = -Math.floor(Math.random()*vyMax+1);
+
                             break;
                         case 2:
-                            vx = vx;
-                            vy = -vy;
+                            // vx = vx;
+                            // vy = -vy;
+                            vx = Math.floor(Math.random()*vxMax+1);
+                            vy = -Math.floor(Math.random()*vyMax+1);
                             break;
                         default:
                             vx = vx;
@@ -147,7 +152,7 @@
             })
 
 
-            console.log(lblCounter.textContent);
+            // console.log(lblCounter.textContent);
             window.addEventListener('resize',()=>{
                 cCWidth = canvasContainer.clientWidth;
                 cCHeight = canvasContainer.clientHeight;
@@ -157,14 +162,15 @@
                 flgMove = !flgMove;
                 draw();
             });
+
             function draw(){
                 let strStatus = 'canvas:'+cCWidth+'x'+cCHeight+', rNum:'+rNum+', alpha:'+alpha;
                 ctx.fillStyle = 'rgba(0,0,0,'+alpha+')';
                 console.log
                 ctx.fillRect(0,0,cCWidth,cCHeight);
 
-                ctx.fillStyle = 'rgba(20,60,20,0.5)';
-                ctx.fillRect(0,0,150,rNum*20+15)
+                ctx.fillStyle = 'rgba(20,128,20,0.5)';
+                ctx.fillRect(0,0,240,rNum*20+15)
 
                 for(let i=0; i<=rNum-1; i++){
                     // if(i==0 && logLimit<10){
@@ -176,7 +182,8 @@
 
                     ctx.fillStyle = 'white';
                     ctx.font = '14px bold serif';
-                    const uStatus = '#'+i+',  x:'+rocket[i].x.toString().padStart(4,'___')+',  y:'+rocket[i].y.toString().padStart(4,'___');
+                    const uStatus = '#'+i+',  x:'+rocket[i].x.toString().padStart(4,'___')+',  y:'+rocket[i].y.toString().padStart(4,'___')+'. vx:'+rocket[i].vx.toString().padStart(3,'  ')+',  vy:'+rocket[i].vy.toString().padStart(3,'  ');
+                    // console.log(uStatus)
                     const uStatusWidth = ctx.measureText(uStatus).width;
                     
                     ctx.fillText(uStatus,10,i*20+22);
@@ -232,10 +239,10 @@
                 <input type="range" id="rangeAlpha" min="0.1" max="1.0" step="0.1" value="0.4">
             </td>
             <td>
-                <input type="range" id="rangeVx" min="1" max="10" value="5">
+                <input type="range" id="rangeVx" min="1" max="20" value="5">
             </td>
             <td>
-                <input type="range" id="rangeVy" min="1" max="8" value="3">
+                <input type="range" id="rangeVy" min="1" max="16" value="3">
             </td>
         </tr>
     </table>
