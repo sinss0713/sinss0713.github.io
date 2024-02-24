@@ -49,6 +49,12 @@
         document.addEventListener('DOMContentLoaded',()=>{
             const version = '1.3';
             const rocketImg = new Image();
+            rocketImg.src = 'img/UFO3.png';
+            const backImg = new Image();
+            backImg.src = 'img/back.png';
+            const backImgWidth = backImg.width;
+            const backImgHeight = backImg.height;
+            console.log(backImgWidth,backImgHeight);
             const lblCounter = document.getElementById('lblCounter');
             const canvasContainer = document.getElementById('canvasContainer');
             const canvas = document.getElementById('canvas2');
@@ -64,7 +70,6 @@
             const lblVy = document.getElementById('lblVy');
 
             const ctx = canvas.getContext('2d');
-            rocketImg.src = 'img/UFO2.png';
             let flgMove = true;
             let rNum = 1;
             let alpha = 0.5;
@@ -166,9 +171,18 @@
 
             function draw(){
                 let strStatus = 'Ver.'+version+', canvas:'+cCWidth+'x'+cCHeight+', rNum:'+rNum+', alpha:'+alpha;
-                ctx.fillStyle = 'rgba(0,0,0,'+alpha+')';
-                console.log
-                ctx.fillRect(0,0,cCWidth,cCHeight);
+                // ctx.fillStyle = 'rgba(0,0,0,'+alpha+')';
+                // ctx.fillRect(0,0,cCWidth,cCHeight);
+                const backRepeatW = Math.ceil(cCWidth / 730);
+                const backRepeatH = Math.ceil(cCHeight / 368);
+                ctx.globalAlpha = alpha;
+                for(let i=1; i<=backRepeatW; i++){
+                    for(let j=1; j<=backRepeatH; j++){
+                        ctx.drawImage(backImg,(i-1)*730,(j-1)*368,730,368);
+                    }
+                }
+                ctx.globalAlpha = 1;
+
                 const strExample = ' # 1 x:1000, y:1000, vx:-10, vy:-10';
                 const uStatusWidth = ctx.measureText(strExample).width;
 
