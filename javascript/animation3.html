@@ -120,7 +120,6 @@
             const bHeight = window.innerHeight;
             let cCWidth = canvasContainer.clientWidth;
             let cCHeight = canvasContainer.clientHeight;
-            // let cCHeight = 300;
             class Rocket {
                 constructor(x,y,vx,vy){
                     this.x = x;
@@ -183,6 +182,7 @@
                     rocket[i] = new Rocket(x,y,vx,vy);
                 }
             }
+
 
             rangerNum.addEventListener('change',()=>{
                 init();
