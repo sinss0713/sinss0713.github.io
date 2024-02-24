@@ -64,6 +64,9 @@
             h1{
                 font-size: 1.0rem;
             }
+            #lblCounter{
+                font-size: 0.8rem;
+            }
             .ctlItem{
                 width:calc(100% / 4 - 8px);
                 font-size: 1rem;
@@ -75,7 +78,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded',()=>{
-            const version = '1.5';
+            const version = '1.6';
             const rocketImg = new Image();
             rocketImg.src = 'img/UFO3.png';
             const backImg = new Image();
@@ -201,7 +204,7 @@
             });
 
             function draw(){
-                let strStatus = 'Status: Ver.'+version+', canvas:'+cCWidth+'x'+cCHeight+', rNum:'+rNum+', alpha:'+alpha+'bSize:'+bWidth+'x'+bHeight;
+                let strStatus = 'Status: Ver.'+version+', canvas:'+cCWidth+'x'+cCHeight+', rNum:'+rNum+', alpha:'+alpha+', bSize:'+bWidth+'x'+bHeight;
                 // ctx.fillStyle = 'rgba(0,0,0,'+alpha+')';
                 // ctx.fillRect(0,0,cCWidth,cCHeight);
                 const backRepeatW = Math.ceil(cCWidth / 730);
