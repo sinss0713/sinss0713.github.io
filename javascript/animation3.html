@@ -183,9 +183,10 @@
                     ctx.fillStyle = 'white';
                     // フォントの指定はctx.font = 'bold 14px serif';のようにする
                     ctx.font = '14px monospace';
-                    const uStatus = '#'+i.toString().padStart(2,' ')+',  x:'+rocket[i].x.toString().padStart(4,' ')+',  y:'+rocket[i].y.toString().padStart(4,' ')+'. vx:'+rocket[i].vx.toString().padStart(3,' ')+',  vy:'+rocket[i].vy.toString().padStart(3,' ');
+                    const uStatus = '#'+i.toString().padStart(2,' ')+'  x:'+rocket[i].x.toString().padStart(4,' ')+',  y:'+rocket[i].y.toString().padStart(4,' ')+'. vx:'+rocket[i].vx.toString().padStart(3,' ')+',  vy:'+rocket[i].vy.toString().padStart(3,' ');
                     // console.log(uStatus)
                     const uStatusWidth = ctx.measureText(uStatus).width;
+                    // console.log(uStatusWidth);
                     
                     ctx.fillText(uStatus,5,i*20+22);
 
