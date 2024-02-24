@@ -47,6 +47,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded',()=>{
+            const version = '1.0';
             const rocketImg = new Image();
             const lblCounter = document.getElementById('lblCounter');
             const canvasContainer = document.getElementById('canvasContainer');
@@ -164,7 +165,7 @@
             });
 
             function draw(){
-                let strStatus = 'canvas:'+cCWidth+'x'+cCHeight+', rNum:'+rNum+', alpha:'+alpha;
+                let strStatus = 'Ver.'+version+', canvas:'+cCWidth+'x'+cCHeight+', rNum:'+rNum+', alpha:'+alpha;
                 ctx.fillStyle = 'rgba(0,0,0,'+alpha+')';
                 console.log
                 ctx.fillRect(0,0,cCWidth,cCHeight);
