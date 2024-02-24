@@ -29,7 +29,9 @@
             height: 70%;
         }
         #lblCounter{
+            display: block;
             background-color: darkblue;
+            width: 100%;
         }
         #rangerNum, #rangeAlpha, #rangeVx, #rangeVy{
             width: 100%;
@@ -51,13 +53,23 @@
         .ctlPanel::after{
                 content: "";
                 width:calc(100% / 2 - 8px);
-        }        
+        }
         @media screen and (min-width:768px) {
             .ctlItem{
                 width:calc(100% / 4 - 8px);
                 font-size: 1rem;
             }
        }
+       @media screen and (max-height:420px) {
+            h1{
+                font-size: 1.0rem;
+            }
+            .ctlItem{
+                width:calc(100% / 4 - 8px);
+                font-size: 1rem;
+            }
+       }
+
 
     </style>
 
@@ -69,8 +81,9 @@
             const backImg = new Image();
             backImg.src = 'img/back.png';
             const backImgWidth = backImg.width;
+            // 以下は取得できていない？
             const backImgHeight = backImg.height;
-            console.log(backImgWidth,backImgHeight);
+            console.log('背景のサイズ',backImgWidth,backImgHeight);
             const lblCounter = document.getElementById('lblCounter');
             const canvasContainer = document.getElementById('canvasContainer');
             const canvas = document.getElementById('canvas2');
@@ -188,7 +201,7 @@
             });
 
             function draw(){
-                let strStatus = 'Ver.'+version+', canvas:'+cCWidth+'x'+cCHeight+', rNum:'+rNum+', alpha:'+alpha+'bSize:'+bWidth+'x'+bHeight;
+                let strStatus = 'Status: Ver.'+version+', canvas:'+cCWidth+'x'+cCHeight+', rNum:'+rNum+', alpha:'+alpha+'bSize:'+bWidth+'x'+bHeight;
                 // ctx.fillStyle = 'rgba(0,0,0,'+alpha+')';
                 // ctx.fillRect(0,0,cCWidth,cCHeight);
                 const backRepeatW = Math.ceil(cCWidth / 730);
@@ -252,7 +265,7 @@
         <canvas id="canvas2" width="300" height="300"></canvas>
     </div>
     <div>
-        status:<div id="lblCounter">none</div>
+        <span id="lblCounter">Status: none</span>
     </div>
     <div class="ctlPanel">
         <div class="ctlItem">
