@@ -63,7 +63,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded',()=>{
-            const version = '1.4';
+            const version = '1.5';
             const rocketImg = new Image();
             rocketImg.src = 'img/UFO3.png';
             const backImg = new Image();
@@ -94,6 +94,8 @@
             let rocket;
 
             let raf;
+            const bWidth = window.innerWidth;
+            const bHeight = window.innerHeight;
             let cCWidth = canvasContainer.clientWidth;
             let cCHeight = canvasContainer.clientHeight;
             // let cCHeight = 300;
@@ -186,7 +188,7 @@
             });
 
             function draw(){
-                let strStatus = 'Ver.'+version+', canvas:'+cCWidth+'x'+cCHeight+', rNum:'+rNum+', alpha:'+alpha;
+                let strStatus = 'Ver.'+version+', canvas:'+cCWidth+'x'+cCHeight+', rNum:'+rNum+', alpha:'+alpha+'bSize:'+bWidth+'x'+bHeight;
                 // ctx.fillStyle = 'rgba(0,0,0,'+alpha+')';
                 // ctx.fillRect(0,0,cCWidth,cCHeight);
                 const backRepeatW = Math.ceil(cCWidth / 730);
