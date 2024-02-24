@@ -170,7 +170,7 @@
                 ctx.fillRect(0,0,cCWidth,cCHeight);
 
                 ctx.fillStyle = 'rgba(20,128,20,0.5)';
-                ctx.fillRect(0,0,240,rNum*20+15)
+                ctx.fillRect(0,0,280,rNum*20+15)
 
                 for(let i=0; i<=rNum-1; i++){
                     // if(i==0 && logLimit<10){
@@ -181,12 +181,13 @@
                     rocket[i].draw();
 
                     ctx.fillStyle = 'white';
-                    ctx.font = '14px bold serif';
-                    const uStatus = '#'+i+',  x:'+rocket[i].x.toString().padStart(4,'___')+',  y:'+rocket[i].y.toString().padStart(4,'___')+'. vx:'+rocket[i].vx.toString().padStart(3,'  ')+',  vy:'+rocket[i].vy.toString().padStart(3,'  ');
+                    // フォントの指定はctx.font = 'bold 14px serif';のようにする
+                    ctx.font = '14px monospace';
+                    const uStatus = '#'+i.toString().padStart(2,' ')+',  x:'+rocket[i].x.toString().padStart(4,' ')+',  y:'+rocket[i].y.toString().padStart(4,' ')+'. vx:'+rocket[i].vx.toString().padStart(3,' ')+',  vy:'+rocket[i].vy.toString().padStart(3,' ');
                     // console.log(uStatus)
                     const uStatusWidth = ctx.measureText(uStatus).width;
                     
-                    ctx.fillText(uStatus,10,i*20+22);
+                    ctx.fillText(uStatus,5,i*20+22);
 
                     rocket[i].x = Math.round(rocket[i].x + rocket[i].vx);
                     if(rocket[i].x < 0 || rocket[i].x > cCWidth - 40){
