@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ja-jp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>アニメーション4</title>
+    <style>
+        html{
+            height:100%;
+        }
+        body{
+            background-color: black;
+            color: aliceblue;
+            height: 95%;
+        }
+        a{
+            color:aliceblue;
+        }
+        #canvasContainer{
+            background-color: black;
+        }
+        #canvas1{
+            /* width: 100%; */
+    	    /* border:1px solid blue; */
+            background-color:black;
+        }
+        #canvasContainer{
+            width: 100%;
+            height: 70%;
+        }
+        #lblStatus{
+            display: block;
+            background-color: darkblue;
+            width: 100%;
+        }
+        #rangerNum, #rangeAlpha, #rangeVx, #rangeVy{
+            width: 100%;
+        }
+        #lblrNum, #lblAlpha, #lblVx, #lblVy{
+            background-color: black;
+        }
+        .ctlPanel{
+            /* background-color: antiquewhite; */
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        .ctlItem{
+            width:calc(100% / 2 - 8px);
+            font-size: 0.8rem;
+        }
+        .ctlPanel::after{
+                content: "";
+                width:calc(100% / 2 - 8px);
+        }
+        @media screen and (min-width:768px) {
+            .ctlItem{
+                width:calc(100% / 4 - 8px);
+                font-size: 1rem;
+            }
+       }
+       @media screen and (max-height:420px) {
+            h1{
+                font-size: 1.0rem;
+            }
+            #lblStatus{
+                font-size: 0.8rem;
+            }
+            .ctlItem{
+                width:calc(100% / 4 - 8px);
+                font-size: 1rem;
+            }
+            #canvasContainer{
+                height:60%;
+            }
+       }
+
+
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async ()=>{
+            const version = '0.1';
+            // const rocketImg = new Image();
+            // rocketImg.src = 'img/UFO3.png';
+            const backImg = new Image();
+            backImg.src = 'img/back.png';
+            let backImgWidth = 0;
+            let backImgHeight = 0;
+
+            // 以下は取得できていない？
+            const backImgSize = await getImgSize(backImg);
+            console.log('背景のサイズ',backImgSize.width,backImgSize.height);
+
+            const lblStatus = document.getElementById('lblStatus');
+            const canvasContainer = document.getElementById('canvasContainer');
+            const canvas = document.getElementById('canvas');
+            let logLimit = 0;
+
+            // const rangerNum = document.getElementById('rangerNum');
+            // const lblrNum = document.getElementById('lblrNum');
+            // const rangeAlpha = document.getElementById('rangeAlpha');
+            // const lblAlpha = document.getElementById('lblAlpha');
+            // const rangeVx = document.getElementById('rangeVx');
+            // const lblVx = document.getElementById('lblVx');
+            // const rangeVy = document.getElementById('rangeVy');
+            // const lblVy = document.getElementById('lblVy');
+
+            const ctx = canvas.getContext('2d');
+            let flgMove = true;
+            let rNum = 1;
+            let alpha = 0.5;
+            let vxMax = 5;
+            let vyMax = 3;
+            let rocket;
+
+            let raf;
+            // ブラウザの画面サイズ取得
+            const bWidth = window.innerWidth;
+            const bHeight = window.innerHeight;
+            // キャンバスのサイズ取得
+            let cCWidth = canvasContainer.clientWidth;
+            let cCHeight = canvasContainer.clientHeight;
+
+            class Rocket {
+                constructor(x,y,vx,vy){
+                    this.x = x;
+                    this.y = y;
+                    this.vx = vx;
+                    this.vy = vy;
+                    this.rad = 30;
+                    this.move = true;
+                }
+                draw(){
+                    ctx.beginPath();
+                    ctx.lineWidth = 3;
+                    ctx.strokeStyle = 'black';
+                    ctx.fillStyle = 'red';
+                    ctx.arc(this.x, this.y, this.rad, 0, Math.PI*2);
+                    ctx.stroke();
+                    ctx.fill();
+                }
+                static help(){
+                    return 'ロケットのクラス';
+                }
+            }
+
+            function init(){
+                canvas.setAttribute('width', cCWidth.toString());
+                canvas.setAttribute('height', cCHeight.toString());
+                rocket= new Rocket(100,100,1,1);
+
+                ctx.fillStyle = 'rgb(0,60,0)';
+                ctx.fillRect(0,0,cCWidth,cCHeight);
+                ctx.save();
+            }
+
+
+            // rangerNum.addEventListener('change',()=>{
+            //     init();
+            // });
+            // rangeAlpha.addEventListener('change',()=>{
+            //     init();
+            // });
+            // rangeVx.addEventListener('change',()=>{
+            //     init();
+            // });
+            // rangeVy.addEventListener('change',()=>{
+            //     init();
+            // })
+
+            function testDraw(){
+                ctx.save();
+                const time = new Date();
+                const seconds = time.getSeconds();
+                const mSeconds = time.getMilliseconds();
+                ctx.beginPath();
+                ctx.translate(200,200)
+                let rad = Math.PI * 2 * (seconds / 6 + mSeconds/6000) + Math.PI;
+                ctx.rotate(rad,)
+                ctx.translate(-200,-200);
+                const radBase = (Math.round(mSeconds*1.5/100) % 16 + 1) * 16;
+                const radPlus = radBase;
+                const radMinus = 255 - radBase;
+                switch(seconds % 6){
+                    case 0:
+                    ctx.fillStyle = 'rgb(255,'+radPlus+',0)';
+                    break;
+                    case 1:
+                    ctx.fillStyle = 'rgb('+radMinus+',255,0)';
+                    break;
+                    case 2:
+                    ctx.fillStyle = 'rgb(0,255,'+radPlus+')';
+                    break;
+                    case 3:
+                    ctx.fillStyle = 'rgb(0,'+radMinus+',255)';
+                    break;
+                    case 4:
+                    ctx.fillStyle = 'rgb('+radPlus+',0,255)';
+                    break;
+                    case 5:
+                    ctx.fillStyle = 'rgb(255,0,'+radMinus+')';
+                    break;
+                    default:
+                    ctx.fillStyle = 'rgb(255,255,0)';
+                }
+                lblStatus.textContent = time.getSeconds()+'秒, '+seconds%6+', radBase:'+radBase+', radPlus:'+radPlus+', radMinus:'+radMinus+', fillStyle:'+ctx.fillStyle;
+
+                ctx.beginPath()
+                ctx.rect(195,200,10,200);
+                ctx.fill();
+                ctx.beginPath()
+                ctx.lineWidth = 1;
+                ctx.strokeStyle='rgb(60,60,60)';
+                ctx.fillStyle='rgb(200,200,200)';
+                ctx.arc(200,200,5,0,2*Math.PI);
+                ctx.fill();
+                ctx.stroke();
+                ctx.restore();
+            }
+
+            window.addEventListener('resize',()=>{
+                cCWidth = canvasContainer.clientWidth;
+                cCHeight = canvasContainer.clientHeight;
+                init();
+            })
+            canvas.addEventListener('click',()=>{
+                flgMove = !flgMove;
+                draw();
+            });
+
+            function draw(){
+                // ctx.globalCompositeOperation = "destination-over";
+                ctx.globalCompositeOperation = "source-over";
+
+                // ctx.strokeStyle = 'rgb(0,0,0)'
+                ctx.fillStyle = 'rgba(200,200,200,0.3)'
+                // restoreで戻るのは塗りつぶしの色と座標軸みたい。描画された状態が保存されるわけではない。
+                ctx.restore();
+                ctx.fillRect(0,0,cCWidth,cCHeight);
+                // ctx.fillRect(0,0,1256,467);
+
+                rocket.x = Math.round(rocket.x + rocket.vx);
+                if(rocket.x < rocket.rad || rocket.x > cCWidth - rocket.rad){
+                    rocket.vx = -rocket.vx
+                };
+                rocket.y = Math.round(rocket.y + rocket.vy);
+                if(rocket.y < rocket.rad || rocket.y > cCHeight - rocket.rad){rocket.vy = -rocket.vy};
+
+                rocket.draw();
+                testDraw();
+
+                if(flgMove){
+                    raf= window.requestAnimationFrame(draw);
+                }else{
+                    window.cancelAnimationFrame(raf);
+                }
+
+            } //draw終了
+
+            function getImgSize(img){
+               return new Promise((resolve, reject)=>{
+                    img.onload = ()=>{
+                        const size={
+                            width:img.naturalWidth,
+                            height:img.naturalHeight
+                        }
+                        resolve(size);
+                    }
+                    img.onerror =(err)=>{
+                        reject(err);
+                    }
+                })
+            } //getImgSize終了
+
+            init();
+            raf = window.requestAnimationFrame(draw);
+        }) // DOMContentLoaded終了
+    </script>
+</head>
+<body>
+    <h1>アニメーション練習4</h1>
+    <div id="canvasContainer">
+        <canvas id="canvas" width="300" height="300"></canvas>
+    </div>
+    <div>
+        <span id="lblStatus">Status: none</span>
+    </div>
+    <!-- <div class="ctlPanel">
+        <div class="ctlItem">
+            <span id="lblrNum"></span>
+            <input type="range" id="rangerNum" min="1" max="30" value="1">
+        </div>
+        <div class="ctlItem">
+            <span id="lblAlpha"></span>
+            <input type="range" id="rangeAlpha" min="0.1" max="1.0" step="0.1" value="1">
+        </div>
+        <div class="ctlItem">
+            <span id="lblVx"></span>
+            <input type="range" id="rangeVx" min="1" max="20" value="1">
+        </div>
+        <div class="ctlItem">
+            <span id="lblVy"></span>
+            <input type="range" id="rangeVy" min="1" max="16" value="1">
+        </div>
+    </div> -->
+
+    <a href="/javascript/">Javasctipt</a>
+</body>
+</html>
