@@ -176,10 +176,12 @@
                 const seconds = time.getSeconds();
                 const mSeconds = time.getMilliseconds();
                 ctx.beginPath();
-                ctx.translate(200,200)
+                // ctx.translate(200,200);
+                ctx.translate(cCWidth/2,cCHeight/2)
                 let rad = Math.PI * 2 * (seconds / 6 + mSeconds/6000) + Math.PI;
                 ctx.rotate(rad,)
-                ctx.translate(-200,-200);
+                // ctx.translate(-200,-200);
+                ctx.translate(-cCWidth/2,-cCHeight/2);
                 const radBase = (Math.round(mSeconds*1.5/100) % 16 + 1) * 16;
                 const radPlus = radBase;
                 const radMinus = 255 - radBase;
@@ -205,16 +207,16 @@
                     default:
                     ctx.fillStyle = 'rgb(255,255,0)';
                 }
-                lblStatus.textContent = time.getSeconds()+'秒, '+seconds%6+', radBase:'+radBase+', radPlus:'+radPlus+', radMinus:'+radMinus+', fillStyle:'+ctx.fillStyle;
+                lblStatus.textContent = 'cCWidth:'+cCWidth+'cCHeight:'+cCHeight+', '+seconds+'秒, '+seconds%6+', radBase:'+radBase+', radPlus:'+radPlus+', radMinus:'+radMinus+', fillStyle:'+ctx.fillStyle;
 
                 ctx.beginPath()
-                ctx.rect(195,200,10,200);
+                ctx.rect(cCWidth/2-5,cCHeight/2,10,200);
                 ctx.fill();
                 ctx.beginPath()
                 ctx.lineWidth = 1;
                 ctx.strokeStyle='rgb(60,60,60)';
                 ctx.fillStyle='rgb(200,200,200)';
-                ctx.arc(200,200,5,0,2*Math.PI);
+                ctx.arc(cCWidth/2,cCHeight/2,5,0,2*Math.PI);
                 ctx.fill();
                 ctx.stroke();
                 ctx.restore();
