@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ja-jp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG</title>
+    <style>
+        svg{
+            background-color: antiquewhite;
+        }
+        #svg2,#svg3{
+            background-color: black;
+        }
+        #status{
+            background-color: darkblue;
+            color:white;
+            padding:5px;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded',()=>{
+            const svg3 = document.getElementById('svg3');
+            const status = document.getElementById('status');
+            const path3 = document.getElementById('path3');
+            let flgClick = false;
+            let svgHeight = 0;
+            svg3.addEventListener('click',()=>{
+                flgClick = !flgClick;
+                svgHeight+=50;
+                if(svgHeight>400){
+                    svgHeight=0;
+                }
+                strD='M 0 0 c 150 '+svgHeight+' 150 '+svgHeight+' 300 0';
+                path3.setAttribute('d',strD);
+                status.textContent=flgClick+', '+strD;
+
+            });
+        });
+    </script>
+</head>
+<body>
+<svg width="300" height="300">
+    <path d="M 10 10 H 90  V 90 H 10 L 10 10" fill="green"/>
+    <path d="M 200 200 L 300 300 L 300 200 Z" fill="yellow" stroke="green"/>
+    <path d="M 300 0 L 200 200 l 0 -100 L 300 0" fill="rgb(0,200,200)" stroke="blue"/> <!-- MoveTo -->
+    <path d="M 300 0 h -150 v 150 L 200 50 L 300 0" fill="rgb(255,220,0)" stroke="red"/> <!-- MoveTo -->
+    <circle cx="100" cy="100" r="20" fill="red"/>
+    <path d="M 0 0 L 100 100 L 0 300 M 100 100 L 300 300 M 100 100 L 300 0" stroke="black" fill="transparent"/>
+</svg>
+<svg id="svg2" width="300" height="300">
+    <path d="M 50 0 v 300 M 100 0 v 300 M 150 0 v 300 M 200 0 v 300 M 250 0 v 300" stroke="rgb(180,180,180)"/>
+    <path d="M 0 50 h 300 M 0 100 h 300 M 0 150 h 300 M 0 200 h 300 M0 250 h 300" stroke="rgb(180,180,180)"/>
+    <path d="M 0 0 c 150 50 150 50 300 0" stroke="blue" fill="transparent"/>
+    <path d="M 0 0 c 150 100 150 100 300 0" stroke="red" fill="transparent"/>
+    <path d="M 0 0 c 150 150 150 150 300 0" stroke="orange" fill="transparent"/>
+    <path d="M 0 0 c 150 200 150 200 300 0" stroke="yellow" fill="transparent"/>
+    <path d="M 0 0 c 150 250 150 250 300 0" stroke="yellowgreen" fill="transparent"/>
+</svg>
+<svg id="svg3" width="300" height="300">
+    <path d="M 50 0 v 300 M 100 0 v 300 M 150 0 v 300 M 200 0 v 300 M 250 0 v 300" stroke="rgb(180,180,180)"/>
+    <path d="M 0 50 h 300 M 0 100 h 300 M 0 150 h 300 M 0 200 h 300 M0 250 h 300" stroke="rgb(180,180,180)"/>
+    <path id="path3" d="M 0 0 c 150 0 150 0 300 0" stroke="yellow" stroke-width="2" fill="yellowgreen"/>
+    <text x="90" y="160" font-size="24" fill="white">Click here!</text>
+</svg>
+<div id="status">Status</div>
+</body>
+</html>
