@@ -5,13 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SVG</title>
     <style>
+        body{
+            padding: 0;
+            margin: 0;
+        }
         svg{
             background-color: black;
+            width: calc(100% / 2 - 6px);
+            margin: 2px;
+        }
+        .svgContainer{
+            margin:0;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: space-around;
         }
         #status{
             background-color: darkblue;
             color:white;
             padding:5px;
+        }
+        @media screen and (min-width:768px) {
+            svg{
+                width:min(calc(100% / 3 - 6px),200px);
+            }            
+        }
+        @media screen and (max-height:420px){
+            h1{
+                font-size: 1.0rem;
+                margin:2px;
+            }
         }
     </style>
     <script>
@@ -93,36 +117,39 @@
     </script>
 </head>
 <body>
-<svg id="svg2" width="200" height="200">
-    <path d="M 50 0 v 200 M 100 0 v 200 M 150 0 v 200 M 200 0 v 200" stroke="rgb(180,180,180)"/>
-    <path d="M 0 50 h 200 M 0 100 h 200 M 0 150 h 200 M 0 200 h 200" stroke="rgb(180,180,180)"/>
-    <path d="M 0 0 c 100 50 100 50 200 0" stroke="blue" fill="transparent"/>
-    <path d="M 0 0 c 100 100 100 100 200 0" stroke="red" fill="transparent"/>
-    <path d="M 0 0 c 100 150 100 150 200 0" stroke="orange" fill="transparent"/>
-    <path d="M 0 0 c 100 200 100 200 200 0" stroke="yellow" fill="transparent"/>
-    <path d="M 0 0 c 100 250 100 250 200 0" stroke="yellowgreen" fill="transparent"/>
-</svg>
-<svg id="svg3" width="200" height="200">
-    <path d="M 50 0 v 200 M 100 0 v 200 M 150 0 v 200 M 200 0 v 200" stroke="rgb(180,180,180)"/>
-    <path d="M 0 50 h 200 M 0 100 h 200 M 0 150 h 200 M 0 200 h 200" stroke="rgb(180,180,180)"/>
-    <path id="path3" d="M 0 0 c 100 0 100 0 200 0" stroke="yellow" stroke-width="2" fill="yellowgreen"/>
-    <text x="43" y="110" font-size="24" fill="white">Click here!</text>
-</svg>
-<svg id="svg4" width="200" height="200">
-    <path d="M 50 0 v 200 M 100 0 v 200 M 150 0 v 200 M 200 0 v 200" stroke="rgb(180,180,180)"/>
-    <path d="M 0 50 h 200 M 0 100 h 200 M 0 150 h 200 M 0 200 h 200" stroke="rgb(180,180,180)"/>
-    <path id="path4" d="M 0 0 c 100 0 100 0 200 0" stroke="yellow" stroke-width="2" fill="skyblue"/>
-</svg>
-<svg width="200" height="200">
-    <path d="M 50 0 v 200 M 100 0 v 200 M 150 0 v 200 M 200 0 v 200" stroke="rgb(180,180,180)"/>
-    <path d="M 0 50 h 200 M 0 100 h 200 M 0 150 h 200 M 0 200 h 200" stroke="rgb(180,180,180)"/>
-
-    <path d="M 0 0 H 40 V 40 H 10 L 0 0 Z" fill="lightblue" stroke="yellow"/>
-    <path d="M 200 200 L 150 150 L 200 150 Z" fill="yellow" stroke="orange" stroke-width="2"/>
-    <path d="M 200 0 L 100 200 l 0 -100 L 200 0" fill="rgb(0,200,200)" stroke="white"/> <!-- MoveTo -->
-    <path d="M 200 0 h -75 v 75 L 200 20 L 200 0" fill="rgb(255,120,0)" stroke="lightgreen"/> <!-- MoveTo -->
-    <circle cx="100" cy="100" r="20" fill="red"/>
-</svg>
-<div id="status">Status</div>
+    <h1>SVGの練習</h1>
+    <div class="svgContainer">
+        <svg id="svg2" width="200" height="200">
+            <path d="M 50 0 v 200 M 100 0 v 200 M 150 0 v 200 M 200 0 v 200" stroke="rgb(180,180,180)"/>
+            <path d="M 0 50 h 200 M 0 100 h 200 M 0 150 h 200 M 0 200 h 200" stroke="rgb(180,180,180)"/>
+            <path d="M 0 0 c 100 50 100 50 200 0" stroke="blue" fill="transparent"/>
+            <path d="M 0 0 c 100 100 100 100 200 0" stroke="red" fill="transparent"/>
+            <path d="M 0 0 c 100 150 100 150 200 0" stroke="orange" fill="transparent"/>
+            <path d="M 0 0 c 100 200 100 200 200 0" stroke="yellow" fill="transparent"/>
+            <path d="M 0 0 c 100 250 100 250 200 0" stroke="yellowgreen" fill="transparent"/>
+        </svg>
+        <svg id="svg3" width="200" height="200">
+            <path d="M 50 0 v 200 M 100 0 v 200 M 150 0 v 200 M 200 0 v 200" stroke="rgb(180,180,180)"/>
+            <path d="M 0 50 h 200 M 0 100 h 200 M 0 150 h 200 M 0 200 h 200" stroke="rgb(180,180,180)"/>
+            <path id="path3" d="M 0 0 c 100 0 100 0 200 0" stroke="yellow" stroke-width="2" fill="yellowgreen"/>
+            <text x="43" y="110" font-size="24" fill="white">Click here!</text>
+        </svg>
+        <svg id="svg4" width="200" height="200">
+            <path d="M 50 0 v 200 M 100 0 v 200 M 150 0 v 200 M 200 0 v 200" stroke="rgb(180,180,180)"/>
+            <path d="M 0 50 h 200 M 0 100 h 200 M 0 150 h 200 M 0 200 h 200" stroke="rgb(180,180,180)"/>
+            <path id="path4" d="M 0 0 c 100 0 100 0 200 0" stroke="yellow" stroke-width="2" fill="skyblue"/>
+        </svg>
+        <svg width="200" height="200">
+            <path d="M 50 0 v 200 M 100 0 v 200 M 150 0 v 200 M 200 0 v 200" stroke="rgb(180,180,180)"/>
+            <path d="M 0 50 h 200 M 0 100 h 200 M 0 150 h 200 M 0 200 h 200" stroke="rgb(180,180,180)"/>
+        
+            <path d="M 0 0 H 40 V 40 H 10 L 0 0 Z" fill="lightblue" stroke="yellow"/>
+            <path d="M 200 200 L 150 150 L 200 150 Z" fill="yellow" stroke="orange" stroke-width="2"/>
+            <path d="M 200 0 L 100 200 l 0 -100 L 200 0" fill="rgb(0,200,200)" stroke="white"/> <!-- MoveTo -->
+            <path d="M 200 0 h -75 v 75 L 200 20 L 200 0" fill="rgb(255,120,0)" stroke="lightgreen"/> <!-- MoveTo -->
+            <circle cx="100" cy="100" r="20" fill="red"/>
+        </svg>
+    </div>
+    <div id="status">Status</div>
 </body>
 </html>
