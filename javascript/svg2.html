@@ -32,6 +32,7 @@
         }
     </style>
     <script>
+        const version = 'Ver.0.1'
         // 座標の変換関数を作りたい
         document.addEventListener('DOMContentLoaded',()=>{
             const status = document.getElementById('status');
@@ -73,7 +74,7 @@
             svg1.unit = Math.floor(svg1.maxScale/5/(10 ** (svg1.maxDigit()-2)))*(10 ** (svg1.maxDigit()-2));
             console.log('unit:',svg1.unit);
             draw(svg1,data1);
-            status.textContent = 'width:'+window.innerWidth+', height:'+window.innerHeight+', svg:'+svg.clientWidth+'x'+svg.clientHeight;
+            status.textContent = version+', width:'+window.innerWidth+', height:'+window.innerHeight+', svg:'+svg.clientWidth+'x'+svg.clientHeight;
             window.addEventListener('resize',()=>{
                 while(svg1.obj.firstChild){
                     svg1.obj.removeChild(svg1.obj.firstChild);
