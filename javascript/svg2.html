@@ -25,71 +25,88 @@
             color:white;
             padding:5px;
         }
+        text{
+            text-align: right;
+        }
     </style>
     <script>
         document.addEventListener('DOMContentLoaded',()=>{
             const status = document.getElementById('status');
-            const svg = document.getElementById('svg');
+            const svg2 = document.getElementById('svg');
             // const pathScale = document.getElementById('pathScale');
-            const svgSize = 300;
-            let numOfData = 7;
-            let scale = 50;
-            status.textContent = 'width:'+window.innerWidth+', height:'+window.innerHeight+', svg:'+svg.clientWidth+'x'+svg.clientHeight;
-            initSVG(svgSize,scale);
-            const data1 = [10,50,40,20,80,120,100];
-            draw(data1);
-            // test1.setAttribute('id','test1');
-            // console.log(pathScale.childNodes[0]);
-            // pathScale.childNodes[0].setAttribute('id','ptest1')
-            // const ptest1 = document.getElementById('ptest1');
-            // ptest1.setAttribute('stroke','red');
-            // ptest1.setAttribute('d','M 0 0 c 100 250 100 250 200 0');
-            // svg.append(ptest1);
-            // console.log(svg.childNodes);
-
-
-            function draw(data){
-                let strD='';
-                const scaleData = document.createElementNS('http://www.w3.org/2000/svg','text');
-                scaleData.setAttribute('x',8);
-                scaleData.setAttribute('y',svgSize-14);
-                scaleData.setAttribute('font-size',14);
-                scaleData.setAttribute('fill','white')
-                scaleData.textContent='0';
-                svg.appendChild(scaleData);
-                console.log(scaleData);
-                console.log(svg.childNodes)
-
-                strD='M 20 ' + (svgSize - 20 - data[0]) + ' ';
-                scale = (svgSize - 20)/(data.length - 1);
-                for(let i = 1; i <= data.length - 1; i++){
-                    strD += 'L '+(i * scale + 20)+' '+(svgSize - 20 - data[i])
+            class Svg{
+                constructor(size,scale,id,offSet){
+                    this.size = size;
+                    this.scale = scale;
+                    this.element = document.getElementById(id);
+                    this.offSet = offSet;
+                    this.obj = document.getElementById(id);
+                    this.graphSize = size - offSet;
+                    this.realUnit = scale.unit * this.graphSize / size; 
                 }
-                console.log(strD)
+                
+            };
+            const svg1 = new Svg(300,{max:300,unit:50},'svg',35)
+            // const svgSize = 300;
+            // let scale = {
+            //     max:300,
+            //     unit:50,
+            // };
+            // const offSet = 20;
+
+            status.textContent = 'width:'+window.innerWidth+', height:'+window.innerHeight+', svg:'+svg.clientWidth+'x'+svg.clientHeight;
+            initSVG(svg1);
+            const data1 = [10,50,40,20,80,120,100];
+            draw(svg1,data1);
+
+            function draw(svg,data){
+                let strD='';
+
+                plotScale(svg);
+
+                strD='M '+svg.offSet+' ' + (svg.size - svg.offSet - data[0]) + ' ';
+                scale = (svg.size - svg.offSet)/(data.length - 1);
+                for(let i = 1; i <= data.length - 1; i++){
+                    strD += 'L '+(Math.round(i * svg.realUnit*10)/10 + svg.offSet)+' '+(svg.size - svg.offSet - Math.round(data[i]/svg.scale.unit*svg.realUnit*10)/10)
+                }
 
                 const pathData = document.createElementNS('http://www.w3.org/2000/svg','path');
                 pathData.setAttribute('d',strD);
                 pathData.setAttribute('stroke','rgb(0,255,0)');
                 pathData.setAttribute('stroke-width','2');
                 pathData.setAttribute('fill','transparent');
-                svg.appendChild(pathData);
+                svg.obj.appendChild(pathData);
             }
 
-            function initSVG(svgSize,scale){
-                const graphSize = svgSize -20;
-                scale = graphSize / (numOfData - 1);
+            function plotScale(svg){
+                let scale = 0;
+                for(let i = 0; i<=svg.graphSize; i+=svg.realUnit){
+                    const scaleData = document.createElementNS('http://www.w3.org/2000/svg','text');
+                    scaleData.setAttribute('x',8);
+                    scaleData.setAttribute('y',Math.round((svg.graphSize-i)*10)/10+4);
+                    scaleData.setAttribute('font-size',14);
+                    scaleData.setAttribute('fill','white')
+                    scaleData.textContent= scale.toString().padStart(3,'_');
+                    scale+=svg.scale.unit;
+                    console.log(scale.toString().padStart(3,' '))
+                    svg.obj.appendChild(scaleData);
+                }
+            }
+
+            function initSVG(svg){
+                const graphSize = svg.size - svg.offSet;
                 const pathScale = document.createElementNS('http://www.w3.org/2000/svg','path');
                 const path1 = document.getElementById('path1');
-                svg.setAttribute('width',svgSize);
-                svg.setAttribute('height',svgSize);
+                svg.obj.setAttribute('width',svg.size);
+                svg.obj.setAttribute('height',svg.size);
                 let strScale = ''
-                for(let i = 0; i<=svgSize; i+=scale){
-                    strScale += 'M '+(i+20)+' 0 v '+(svgSize - 20)+' ';
-                    strScale += 'M 20 '+i+' h '+svgSize+' ';
+                for(let i = 0; i<=svg.graphSize; i+=svg.realUnit){
+                    strScale += 'M '+(Math.round((i+svg.offSet)*10)/10)+' 0 v '+graphSize+' ';
+                    strScale += 'M '+svg.offSet+' '+Math.round(i*10)/10+' h '+graphSize+' ';
                 }
                 pathScale.setAttribute('d',strScale);
                 pathScale.setAttribute('stroke','rgba(200,200,200,0.8)');
-                svg.appendChild(pathScale);
+                svg.obj.appendChild(pathScale);
                 console.log(pathScale);
             }
         });
