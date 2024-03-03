@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ja-jp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG2</title>
+    <style>
+        body{
+            padding: 0;
+            margin: 0;
+        }
+        svg{
+            background-color: black;
+            margin: 2px;
+        }
+        .svgContainer{
+            margin:0;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+        #status{
+            background-color: darkblue;
+            color:white;
+            padding:5px;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded',()=>{
+            const status = document.getElementById('status');
+            const svg = document.getElementById('svg');
+            // const pathScale = document.getElementById('pathScale');
+            const svgSize = 300;
+            let numOfData = 7;
+            let scale = 50;
+            status.textContent = 'width:'+window.innerWidth+', height:'+window.innerHeight+', svg:'+svg.clientWidth+'x'+svg.clientHeight;
+            initSVG(svgSize,scale);
+            const data1 = [10,50,40,20,80,120,100];
+            draw(data1);
+            // test1.setAttribute('id','test1');
+            // console.log(pathScale.childNodes[0]);
+            // pathScale.childNodes[0].setAttribute('id','ptest1')
+            // const ptest1 = document.getElementById('ptest1');
+            // ptest1.setAttribute('stroke','red');
+            // ptest1.setAttribute('d','M 0 0 c 100 250 100 250 200 0');
+            // svg.append(ptest1);
+            // console.log(svg.childNodes);
+
+
+            function draw(data){
+                let strD='';
+                const scaleData = document.createElementNS('http://www.w3.org/2000/svg','text');
+                scaleData.setAttribute('x',8);
+                scaleData.setAttribute('y',svgSize-14);
+                scaleData.setAttribute('font-size',14);
+                scaleData.setAttribute('fill','white')
+                scaleData.textContent='0';
+                svg.appendChild(scaleData);
+                console.log(scaleData);
+                console.log(svg.childNodes)
+
+                strD='M 20 ' + (svgSize - 20 - data[0]) + ' ';
+                scale = (svgSize - 20)/(data.length - 1);
+                for(let i = 1; i <= data.length - 1; i++){
+                    strD += 'L '+(i * scale + 20)+' '+(svgSize - 20 - data[i])
+                }
+                console.log(strD)
+
+                const pathData = document.createElementNS('http://www.w3.org/2000/svg','path');
+                pathData.setAttribute('d',strD);
+                pathData.setAttribute('stroke','rgb(0,255,0)');
+                pathData.setAttribute('stroke-width','2');
+                pathData.setAttribute('fill','transparent');
+                svg.appendChild(pathData);
+            }
+
+            function initSVG(svgSize,scale){
+                const graphSize = svgSize -20;
+                scale = graphSize / (numOfData - 1);
+                const pathScale = document.createElementNS('http://www.w3.org/2000/svg','path');
+                const path1 = document.getElementById('path1');
+                svg.setAttribute('width',svgSize);
+                svg.setAttribute('height',svgSize);
+                let strScale = ''
+                for(let i = 0; i<=svgSize; i+=scale){
+                    strScale += 'M '+(i+20)+' 0 v '+(svgSize - 20)+' ';
+                    strScale += 'M 20 '+i+' h '+svgSize+' ';
+                }
+                pathScale.setAttribute('d',strScale);
+                pathScale.setAttribute('stroke','rgba(200,200,200,0.8)');
+                svg.appendChild(pathScale);
+                console.log(pathScale);
+            }
+        });
+    </script>
+</head>
+<body>
+    <h1>SVGの練習2</h1>
+    <div class="svgContainer">
+        <svg id="svg" width="300" height="300">
+        </svg>
+    </div>
+    <div id="status">Status</div>
+</body>
+</html>
