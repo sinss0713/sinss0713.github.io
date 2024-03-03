@@ -9,12 +9,13 @@
             padding: 0;
             margin: 0;
         }
-        svg{
+        #svg{
             background-color: black;
             margin: 2px;
         }
         .svgContainer{
             margin:0;
+            width: 100%;
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
@@ -38,7 +39,7 @@
             // const pathScale = document.getElementById('pathScale');
             class Svg{
                 constructor(sizeX,sizeY,unit,id,offSet,baseLine){
-                    this.sizeX = sizeX;
+                    this.sizeX = Math.min(sizeX,window.innerWidth);
                     this.sizeY = sizeY;
                     this.unit = unit;
                     this.offSet = offSet;
@@ -65,6 +66,7 @@
                 }
             };
             const svg1 = new Svg(600,300,200,'svg',35,100);
+            console.log('svg1.sizeX:',svg1.sizeX)
             const data1 = [30,100,120,80,90,240,100,60,10,90,30,60,140,70,32,18,100];
             svg1.maxScale = data1.reduce((a,b)=>Math.max(a,b),-Infinity);
 
@@ -72,6 +74,12 @@
             console.log('unit:',svg1.unit);
             draw(svg1,data1);
             status.textContent = 'width:'+window.innerWidth+', height:'+window.innerHeight+', svg:'+svg.clientWidth+'x'+svg.clientHeight;
+            window.addEventListener('resize',()=>{
+                while(svg1.obj.firstChild){
+                    svg1.obj.removeChild(svg1.obj.firstChild);
+                }
+                draw(svg1,data1);
+            })
 
             function draw(svg,data){
                 let strD='';
@@ -113,14 +121,18 @@
 
             function initSVG(svg,data){
                 const pathScale = document.createElementNS('http://www.w3.org/2000/svg','path');
+                // svg.obj.setAttribute('width',Math.min(svg.sizeX,window.innerWidth));
+                svg.sizeX = window.innerWidth
+                svg.graphSizeX = svg.sizeX - svg.offSet;
+                svg.sizeY = window.innerHeight-160;
+                svg.graphSizeY = svg.sizeY - svg.offSet;
+                console.log('svg.sizeX',svg.sizeX);
                 svg.obj.setAttribute('width',svg.sizeX);
                 svg.obj.setAttribute('height',svg.sizeY);
                 let strScale = ''
-                // console.log('graphSize:',svg.graphSize)
-                // console.log('realUnit:',svg.realUnit());
                 for(let i = svg.graphSizeY; i >= 0; i-=svg.realUnit()){
                     strScale += 'M '+svg.offSet+' '+(Math.round(i*10)/10)+' h '+svg.graphSizeX+' ';
-                    console.log('i',Math.round(i*10)/10);
+                    // console.log('i',Math.round(i*10)/10);
                 };
                 for(let i=0; i<=data.length-1;i++){
                     strScale += 'M '+((Math.round(i*svg.graphSizeX/(data.length-1)*10)/10)+svg.offSet)+' 0 v '+svg.graphSizeY+' ';
