@@ -125,7 +125,7 @@
                 // svg.obj.setAttribute('width',Math.min(svg.sizeX,window.innerWidth));
                 svg.sizeX = window.innerWidth
                 svg.graphSizeX = svg.sizeX - svg.offSet;
-                svg.sizeY = Math.min(window.innerHeight-140,300);
+                svg.sizeY = Math.min(window.innerHeight-140,window.innerWidth/2);
                 svg.graphSizeY = svg.sizeY - svg.offSet;
                 console.log('svg.sizeX',svg.sizeX);
                 svg.obj.setAttribute('width',svg.sizeX);
