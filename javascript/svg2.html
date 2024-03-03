@@ -31,21 +31,22 @@
         }
     </style>
     <script>
+        // 座標の変換関数を作りたい
         document.addEventListener('DOMContentLoaded',()=>{
             const status = document.getElementById('status');
             const svg2 = document.getElementById('svg');
             // const pathScale = document.getElementById('pathScale');
             class Svg{
-                constructor(sizeX,sizeY,maxScale,unit,id,offSet,baseLine){
+                constructor(sizeX,sizeY,unit,id,offSet,baseLine){
                     this.sizeX = sizeX;
                     this.sizeY = sizeY;
-                    this.maxScale = maxScale;
                     this.unit = unit;
                     this.offSet = offSet;
                     this.obj = document.getElementById(id);
+                    this.baseLine = baseLine;
                     this.graphSizeX = sizeX - offSet;
                     this.graphSizeY = sizeY - offSet;
-                    this.baseLine = baseLine;
+                    this.maxScale = 500;
                     // this.realUnit = Math.round(this.graphSize * this.unit / this.maxScale*10)/10;
                 }
                 realUnit(){
@@ -58,15 +59,19 @@
                     const result = String(this.maxScale).length;
                     return result;
                 }
+                maxScale(data){
+                    const result = data1.reduce((a,b)=>Math.max(a,b),-Infinity);
+                    return result;
+                }
             };
-            const svg1 = new Svg(600,300,900,200,'svg',35,100);
-            const data1 = [30,100,120,80,90,240,100,60,10,90];
+            const svg1 = new Svg(600,300,200,'svg',35,100);
+            const data1 = [30,100,120,80,90,240,100,60,10,90,30,60,140,70,32,18,100];
             svg1.maxScale = data1.reduce((a,b)=>Math.max(a,b),-Infinity);
-            // 1000=>200 9000=>1000 
+
             svg1.unit = Math.floor(svg1.maxScale/5/(10 ** (svg1.maxDigit()-2)))*(10 ** (svg1.maxDigit()-2));
             console.log('unit:',svg1.unit);
-            status.textContent = 'width:'+window.innerWidth+', height:'+window.innerHeight+', svg:'+svg.clientWidth+'x'+svg.clientHeight;
             draw(svg1,data1);
+            status.textContent = 'width:'+window.innerWidth+', height:'+window.innerHeight+', svg:'+svg.clientWidth+'x'+svg.clientHeight;
 
             function draw(svg,data){
                 let strD='';
