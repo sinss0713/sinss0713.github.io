@@ -27,6 +27,7 @@
         }
         text{
             text-align: right;
+            background-color: antiquewhite;
         }
     </style>
     <script>
@@ -35,39 +36,48 @@
             const svg2 = document.getElementById('svg');
             // const pathScale = document.getElementById('pathScale');
             class Svg{
-                constructor(size,scale,id,offSet){
-                    this.size = size;
-                    this.scale = scale;
-                    this.element = document.getElementById(id);
+                constructor(sizeX,sizeY,maxScale,unit,id,offSet,baseLine){
+                    this.sizeX = sizeX;
+                    this.sizeY = sizeY;
+                    this.maxScale = maxScale;
+                    this.unit = unit;
                     this.offSet = offSet;
                     this.obj = document.getElementById(id);
-                    this.graphSize = size - offSet;
-                    this.realUnit = scale.unit * this.graphSize / size; 
+                    this.graphSizeX = sizeX - offSet;
+                    this.graphSizeY = sizeY - offSet;
+                    this.baseLine = baseLine;
+                    // this.realUnit = Math.round(this.graphSize * this.unit / this.maxScale*10)/10;
                 }
-                
+                realUnit(){
+                    const result = Math.round(this.graphSizeY * this.unit / (this.maxScale*1.2)*10)/10;
+                    // console.log('mScale:',this.maxScale)
+                    // console.log('result:',result)
+                    return result;
+                }
+                maxDigit(){
+                    const result = String(this.maxScale).length;
+                    return result;
+                }
             };
-            const svg1 = new Svg(300,{max:300,unit:50},'svg',35)
-            // const svgSize = 300;
-            // let scale = {
-            //     max:300,
-            //     unit:50,
-            // };
-            // const offSet = 20;
-
+            const svg1 = new Svg(600,300,900,200,'svg',35,100);
+            const data1 = [30,100,120,80,90,240,100,60,10,90];
+            svg1.maxScale = data1.reduce((a,b)=>Math.max(a,b),-Infinity);
+            // 1000=>200 9000=>1000 
+            svg1.unit = Math.floor(svg1.maxScale/5/(10 ** (svg1.maxDigit()-2)))*(10 ** (svg1.maxDigit()-2));
+            console.log('unit:',svg1.unit);
             status.textContent = 'width:'+window.innerWidth+', height:'+window.innerHeight+', svg:'+svg.clientWidth+'x'+svg.clientHeight;
-            initSVG(svg1);
-            const data1 = [10,50,40,20,80,120,100];
             draw(svg1,data1);
 
             function draw(svg,data){
                 let strD='';
 
+                initSVG(svg,data);
                 plotScale(svg);
 
-                strD='M '+svg.offSet+' ' + (svg.size - svg.offSet - data[0]) + ' ';
-                scale = (svg.size - svg.offSet)/(data.length - 1);
+                strD='M '+svg.offSet+' ' + (svg.graphSizeY - Math.round(data[0]/svg.unit*svg.realUnit()*10)/10) + ' ';
+                scale = (svg.sizeX - svg.offSet) / (data.length - 1);
                 for(let i = 1; i <= data.length - 1; i++){
-                    strD += 'L '+(Math.round(i * svg.realUnit*10)/10 + svg.offSet)+' '+(svg.size - svg.offSet - Math.round(data[i]/svg.scale.unit*svg.realUnit*10)/10)
+                    strD += 'L '+((Math.round(i*svg.graphSizeX/(data.length-1)*10)/10)+svg.offSet)+' '+(svg.graphSizeY - Math.round(data[i]/svg.unit*svg.realUnit()*10)/10)
                 }
 
                 const pathData = document.createElementNS('http://www.w3.org/2000/svg','path');
@@ -80,34 +90,51 @@
 
             function plotScale(svg){
                 let scale = 0;
-                for(let i = 0; i<=svg.graphSize; i+=svg.realUnit){
+                let hOffSet = 0;
+                for(let i = 0; i<=svg.graphSizeY; i+=svg.realUnit()){
                     const scaleData = document.createElementNS('http://www.w3.org/2000/svg','text');
-                    scaleData.setAttribute('x',8);
-                    scaleData.setAttribute('y',Math.round((svg.graphSize-i)*10)/10+4);
+                    // console.log('scale:',scale);
+                    const scaleDigit = String(scale).length;
+                    hOffSet = -(scaleDigit-1)*8
+                    scaleData.setAttribute('x',svg.offSet-12+hOffSet);
+                    scaleData.setAttribute('y',Math.round((svg.graphSizeY-i)*10)/10+4);
                     scaleData.setAttribute('font-size',14);
-                    scaleData.setAttribute('fill','white')
-                    scaleData.textContent= scale.toString().padStart(3,'_');
-                    scale+=svg.scale.unit;
-                    console.log(scale.toString().padStart(3,' '))
+                    scaleData.setAttribute('fill','white');
+                    scaleData.textContent= scale;
+                    scale+=svg.unit;
                     svg.obj.appendChild(scaleData);
                 }
             }
 
-            function initSVG(svg){
-                const graphSize = svg.size - svg.offSet;
+            function initSVG(svg,data){
                 const pathScale = document.createElementNS('http://www.w3.org/2000/svg','path');
-                const path1 = document.getElementById('path1');
-                svg.obj.setAttribute('width',svg.size);
-                svg.obj.setAttribute('height',svg.size);
+                svg.obj.setAttribute('width',svg.sizeX);
+                svg.obj.setAttribute('height',svg.sizeY);
                 let strScale = ''
-                for(let i = 0; i<=svg.graphSize; i+=svg.realUnit){
-                    strScale += 'M '+(Math.round((i+svg.offSet)*10)/10)+' 0 v '+graphSize+' ';
-                    strScale += 'M '+svg.offSet+' '+Math.round(i*10)/10+' h '+graphSize+' ';
-                }
+                // console.log('graphSize:',svg.graphSize)
+                // console.log('realUnit:',svg.realUnit());
+                for(let i = svg.graphSizeY; i >= 0; i-=svg.realUnit()){
+                    strScale += 'M '+svg.offSet+' '+(Math.round(i*10)/10)+' h '+svg.graphSizeX+' ';
+                    console.log('i',Math.round(i*10)/10);
+                };
+                for(let i=0; i<=data.length-1;i++){
+                    strScale += 'M '+((Math.round(i*svg.graphSizeX/(data.length-1)*10)/10)+svg.offSet)+' 0 v '+svg.graphSizeY+' ';
+                };
                 pathScale.setAttribute('d',strScale);
                 pathScale.setAttribute('stroke','rgba(200,200,200,0.8)');
                 svg.obj.appendChild(pathScale);
-                console.log(pathScale);
+                const baseLine = document.createElementNS('http://www.w3.org/2000/svg','path');
+                // const plotY=(Math.round((svg.graphSizeY-(svg.baseLine/(svg.maxScale*1.2)*svg.sizeY)+svg.offSet)*10)/10)
+                const plotY=Math.round((svg.graphSizeY-svg.baseLine/(svg.maxScale*1.2)*svg.graphSizeY)*10)/10;
+                strScale = 'M '+svg.offSet+' '+plotY+' h '+svg.graphSizeX+' ';
+                // strScale = 'M '+svg.offSet+' '+100+'h '+svg.graphSizeX+' ';
+                console.log('baseLine:',plotY)
+                baseLine.setAttribute('d',strScale);
+                baseLine.setAttribute('stroke-width','2');
+                baseLine.setAttribute('stroke','rgb(200,0,0)');
+                svg.obj.appendChild(baseLine);
+
+                // console.log(pathScale);
             }
         });
     </script>
